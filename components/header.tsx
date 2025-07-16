@@ -9,34 +9,41 @@ export function Header() {
 
   return (
     <header className="bg-white shadow-sm fixed w-full top-0 z-50">
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-4">
         <div className="flex justify-between items-center py-6">
           <div className="flex items-center">
             <Building2 className="h-12 w-12 text-blue-600" />
             <span className="ml-4 text-3xl font-extrabold text-gray-900 tracking-tight">AZA Constructora</span>
           </div>
 
-          <nav className="hidden md:flex space-x-10">
-            <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold">
+          <nav className="hidden md:flex space-x-4">
+            <Link href="/" className="relative text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold px-2 py-1 group">
               Inicio
+              <span className="absolute left-0 bottom-0 w-0 h-1 bg-blue-600 transition-all duration-300 group-hover:w-full rounded"></span>
             </Link>
-            <Link href="#servicios" className="text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold">
+            <Link href="#servicios" className="relative text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold px-2 py-1 group">
               Servicios
+              <span className="absolute left-0 bottom-0 w-0 h-1 bg-blue-600 transition-all duration-300 group-hover:w-full rounded"></span>
             </Link>
-            <Link href="#proyectos" className="text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold">
+            <Link href="#proyectos" className="relative text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold px-2 py-1 group">
               Proyectos
+              <span className="absolute left-0 bottom-0 w-0 h-1 bg-blue-600 transition-all duration-300 group-hover:w-full rounded"></span>
             </Link>
-            <Link href="/galeria" className="text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold">
+            <Link href="/galeria" className="relative text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold px-2 py-1 group">
               Galería
+              <span className="absolute left-0 bottom-0 w-0 h-1 bg-blue-600 transition-all duration-300 group-hover:w-full rounded"></span>
             </Link>
-            <Link href="/blog" className="text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold">
+            <Link href="/blog" className="relative text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold px-2 py-1 group">
               Blog
+              <span className="absolute left-0 bottom-0 w-0 h-1 bg-blue-600 transition-all duration-300 group-hover:w-full rounded"></span>
             </Link>
-            <Link href="#contacto" className="text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold">
+            <Link href="#contacto" className="relative text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold px-2 py-1 group">
               Contacto
+              <span className="absolute left-0 bottom-0 w-0 h-1 bg-blue-600 transition-all duration-300 group-hover:w-full rounded"></span>
             </Link>
-            <Link href="/cotizacion" className="text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold">
+            <Link href="/cotizacion" className="relative text-gray-700 hover:text-blue-600 transition-colors text-xl font-semibold px-2 py-1 group">
               Cotización
+              <span className="absolute left-0 bottom-0 w-0 h-1 bg-blue-600 transition-all duration-300 group-hover:w-full rounded"></span>
             </Link>
           </nav>
 
