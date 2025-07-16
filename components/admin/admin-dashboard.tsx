@@ -30,8 +30,8 @@ export function AdminDashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600">Resumen de la actividad del blog</p>
+        <h1 className="text-3xl font-bold text-brand-primary">Dashboard</h1>
+        <p className="text-brand-accent">Resumen de la actividad del blog</p>
       </div>
 
       {/* Stats Cards */}

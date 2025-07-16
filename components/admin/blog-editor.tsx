@@ -121,7 +121,7 @@ export function BlogEditor({ postId }: BlogEditorProps) {
             </Link>
           </Button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">{postId ? "Editar Artículo" : "Nuevo Artículo"}</h1>
+            <h1 className="text-3xl font-bold text-brand-primary">{postId ? "Editar Artículo" : "Nuevo Artículo"}</h1>
           </div>
         </div>
         <div className="flex gap-2">
@@ -132,7 +132,7 @@ export function BlogEditor({ postId }: BlogEditorProps) {
           <Button
             onClick={() => handleSave("published")}
             disabled={isLoading || !post.title || !post.content}
-            className="bg-blue-600 hover:bg-blue-700"
+            className="bg-brand-primary hover:bg-brand-accent"
           >
             <Eye className="mr-2 h-4 w-4" />
             Publicar
@@ -209,7 +209,7 @@ export function BlogEditor({ postId }: BlogEditorProps) {
                       className="font-mono"
                       required
                     />
-                    <p className="text-sm text-gray-500 mt-2">
+                    <p className="text-sm text-brand-accent mt-2">
                       Puedes usar HTML básico: &lt;h2&gt;, &lt;p&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;ul&gt;,
                       &lt;ol&gt;, &lt;li&gt;
                     </p>

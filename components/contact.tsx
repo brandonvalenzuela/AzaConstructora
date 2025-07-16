@@ -3,11 +3,13 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Phone, Mail, MapPin, Clock } from "lucide-react"
+import { Phone, Mail, MapPin, Clock, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import Link from "next/link"
+import emailjs from 'emailjs-com';
+import { useToast } from "@/components/ui/use-toast";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -17,13 +19,39 @@ export function Contact() {
     message: "",
   })
 
+ 
+  const [isSending, setIsSending] = useState(false);
+  const { toast } = useToast();
+
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Aquí iría la lógica para enviar el formulario
-    console.log("Formulario enviado:", formData)
-    alert("Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.")
-    setFormData({ name: "", email: "", phone: "", message: "" })
-  }
+    e.preventDefault();
+    setIsSending(true);
+
+    emailjs.sendForm(
+      'service_lfvk1iq', // service_id
+      'template_zde1y0n', // template_id
+      e.target as HTMLFormElement,
+      'GTHGX6BKGytOFh4zt' // PUBLIC KEY
+    )
+    .then(() => {
+      toast({
+        title: "¡Mensaje enviado!",
+        description: "Nos pondremos en contacto contigo pronto.",
+      });
+      setTimeout(() => {
+        setFormData({ name: "", email: "", phone: "", message: "" });
+        setIsSending(false);
+      }, 1000); // 1 segundo de espera
+    })
+    .catch(() => {
+      toast({
+        title: "Error",
+        description: "Hubo un error al enviar el mensaje.",
+        variant: "destructive"
+      });
+      setIsSending(false);
+    });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -48,7 +76,7 @@ export function Contact() {
 
             <div className="space-y-6">
               <div className="flex items-start">
-                <Phone className="h-6 w-6 text-blue-600 mt-1 mr-4" />
+                <Phone className="h-6 w-6 text-brand-primary mt-1 mr-4" />
                 <div>
                   <p className="font-medium text-gray-900">Teléfono</p>
                   <p className="text-gray-600">+52 (55) 1234-5678</p>
@@ -57,7 +85,7 @@ export function Contact() {
               </div>
 
               <div className="flex items-start">
-                <Mail className="h-6 w-6 text-blue-600 mt-1 mr-4" />
+                <Mail className="h-6 w-6 text-brand-primary mt-1 mr-4" />
                 <div>
                   <p className="font-medium text-gray-900">Email</p>
                   <p className="text-gray-600">info@azaconstructora.com</p>
@@ -66,7 +94,7 @@ export function Contact() {
               </div>
 
               <div className="flex items-start">
-                <MapPin className="h-6 w-6 text-blue-600 mt-1 mr-4" />
+                <MapPin className="h-6 w-6 text-brand-primary mt-1 mr-4" />
                 <div>
                   <p className="font-medium text-gray-900">Dirección</p>
                   <p className="text-gray-600">
@@ -78,7 +106,7 @@ export function Contact() {
               </div>
 
               <div className="flex items-start">
-                <Clock className="h-6 w-6 text-blue-600 mt-1 mr-4" />
+                <Clock className="h-6 w-6 text-brand-primary mt-1 mr-4" />
                 <div>
                   <p className="font-medium text-gray-900">Horarios</p>
                   <p className="text-gray-600">Lunes a Viernes: 8:00 AM - 6:00 PM</p>
@@ -87,13 +115,13 @@ export function Contact() {
               </div>
             </div>
 
-            <div className="mt-8 p-6 bg-blue-50 rounded-lg">
+            <div className="mt-8 p-6 bg-brand-primary/10 rounded-lg">
               <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Necesitas una cotización?</h4>
               <p className="text-gray-600 mb-4">
                 Si tienes un proyecto específico en mente, utiliza nuestro formulario especializado para obtener una
                 cotización detallada.
               </p>
-              <Button asChild className="bg-blue-600 hover:bg-blue-700">
+              <Button asChild className="bg-brand-primary hover:bg-brand-accent">
                 <Link href="/cotizacion">Solicitar Cotización Detallada</Link>
               </Button>
             </div>
@@ -146,8 +174,15 @@ export function Contact() {
                 />
               </div>
 
-              <Button type="submit" size="lg" className="w-full bg-blue-600 hover:bg-blue-700">
-                Enviar Mensaje
+              <Button type="submit" size="lg" className="w-full bg-brand-primary hover:bg-brand-accent" disabled={isSending}>
+                {isSending ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <Loader2 className="animate-spin h-5 w-5" />
+                    Enviando...
+                  </span>
+                ) : (
+                  "Enviar Mensaje"
+                )}
               </Button>
             </form>
           </div>
@@ -156,3 +191,5 @@ export function Contact() {
     </section>
   )
 }
+
+

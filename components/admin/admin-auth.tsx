@@ -37,10 +37,10 @@ export function AdminAuth() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <Building2 className="h-12 w-12 text-blue-600" />
+            <Building2 className="h-12 w-12 text-brand-accent" />
           </div>
-          <CardTitle className="text-2xl">Panel de Administración</CardTitle>
-          <p className="text-gray-600">AZA Constructora</p>
+          <CardTitle className="text-2xl text-brand-primary">Panel de Administración</CardTitle>
+          <p className="text-brand-accent">AZA Constructora</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
@@ -65,12 +65,12 @@ export function AdminAuth() {
               />
             </div>
             {error && <div className="text-red-600 text-sm bg-red-50 p-2 rounded">{error}</div>}
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" disabled={isLoading}>
+            <Button type="submit" className="w-full bg-brand-primary hover:bg-brand-accent" disabled={isLoading}>
               <Lock className="mr-2 h-4 w-4" />
               {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
             </Button>
           </form>
-          <div className="mt-4 text-sm text-gray-600 text-center">
+          <div className="mt-4 text-sm text-brand-accent text-center">
             <p>Credenciales de prueba:</p>
             <p>
               Usuario: <code className="bg-gray-100 px-1 rounded">admin</code>

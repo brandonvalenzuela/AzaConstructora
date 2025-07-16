@@ -247,7 +247,7 @@ export function QuoteForm() {
           <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md">{state.message}</div>
         )}
 
-        <Button type="submit" size="lg" className="w-full bg-blue-600 hover:bg-blue-700" disabled={isPending}>
+        <Button type="submit" size="lg" className="w-full bg-brand-primary hover:bg-brand-accent" disabled={isPending}>
           {isPending ? "Enviando..." : "Solicitar Cotización"}
         </Button>
       </div>

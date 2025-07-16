@@ -18,8 +18,8 @@ export function MediaManager() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Gestión de Medios</h1>
-        <p className="text-gray-600">Administra todas las imágenes de tu blog</p>
+        <h1 className="text-3xl font-bold text-brand-primary">Gestión de Medios</h1>
+        <p className="text-brand-accent">Administra todas las imágenes de tu blog</p>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>

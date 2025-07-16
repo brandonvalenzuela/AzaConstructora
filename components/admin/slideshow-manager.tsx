@@ -91,7 +91,7 @@ export function SlideshowManager() {
       <Card>
         <CardHeader>
           <CardTitle>Seleccionar Imágenes Destacadas</CardTitle>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-brand-accent">
             Las imágenes marcadas como destacadas aparecerán en las presentaciones automáticas
           </p>
         </CardHeader>
@@ -102,7 +102,7 @@ export function SlideshowManager() {
                 <div
                   key={image.id}
                   className={`relative group border-2 rounded-lg overflow-hidden transition-all ${
-                    featuredImages.has(image.id) ? "border-blue-500 bg-blue-50" : "border-gray-200"
+                    featuredImages.has(image.id) ? "border-brand-primary bg-brand-accent/10" : "border-brand-accent"
                   }`}
                 >
                   <div className="aspect-video">

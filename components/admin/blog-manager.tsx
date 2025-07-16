@@ -53,10 +53,10 @@ export function BlogManager() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gestión de Blog</h1>
-          <p className="text-gray-600">Administra todos los artículos del blog</p>
+          <h1 className="text-3xl font-bold text-brand-primary">Gestión de Blog</h1>
+          <p className="text-brand-accent">Administra todos los artículos del blog</p>
         </div>
-        <Button asChild className="bg-blue-600 hover:bg-blue-700">
+        <Button asChild className="bg-brand-primary hover:bg-brand-accent">
           <Link href="/admin/blog/new">
             <Plus className="mr-2 h-4 w-4" />
             Nuevo Artículo
@@ -118,8 +118,8 @@ export function BlogManager() {
                         {post.status === "published" ? "Publicado" : "Borrador"}
                       </Badge>
                     </div>
-                    <p className="text-gray-600 mb-2 line-clamp-2">{post.excerpt}</p>
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                    <p className="text-brand-accent mb-2 line-clamp-2">{post.excerpt}</p>
+                    <div className="flex items-center gap-4 text-sm text-brand-accent">
                       <span>Categoría: {post.category}</span>
                       <span>Creado: {new Date(post.createdAt).toLocaleDateString("es-ES")}</span>
                       <span>Actualizado: {new Date(post.updatedAt).toLocaleDateString("es-ES")}</span>
@@ -155,16 +155,16 @@ export function BlogManager() {
           <Card>
             <CardContent className="pt-6">
               <div className="text-center py-12">
-                <FileText className="mx-auto h-12 w-12 text-gray-400" />
-                <h3 className="mt-2 text-sm font-medium text-gray-900">No hay artículos</h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <FileText className="mx-auto h-12 w-12 text-brand-accent" />
+                <h3 className="mt-2 text-sm font-medium text-brand-primary">No hay artículos</h3>
+                <p className="mt-1 text-sm text-brand-accent">
                   {searchTerm || filterStatus !== "all"
                     ? "No se encontraron artículos con los filtros aplicados"
                     : "Comienza creando tu primer artículo"}
                 </p>
                 {!searchTerm && filterStatus === "all" && (
                   <div className="mt-6">
-                    <Button asChild className="bg-blue-600 hover:bg-blue-700">
+                    <Button asChild className="bg-brand-primary hover:bg-brand-accent">
                       <Link href="/admin/blog/new">
                         <Plus className="mr-2 h-4 w-4" />
                         Crear Artículo

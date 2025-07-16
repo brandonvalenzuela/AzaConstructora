@@ -26,7 +26,7 @@ export function BlogPreview() {
                   className="bg-gray-50 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
                 >
                   <div className="p-6">
-                    <div className="flex items-center text-gray-500 text-sm mb-3">
+                    <div className="flex items-center text-brand-accent text-sm mb-3">
                       <Calendar className="h-4 w-4 mr-2" />
                       {new Date(post.createdAt).toLocaleDateString("es-ES", {
                         year: "numeric",
@@ -34,15 +34,15 @@ export function BlogPreview() {
                         day: "numeric",
                       })}
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                      <Link href={`/blog/${post.slug}`} className="hover:text-blue-600 transition-colors">
+                    <h3 className="text-xl font-semibold text-brand-primary mb-3">
+                      <Link href={`/blog/${post.slug}`} className="hover:text-brand-accent transition-colors">
                         {post.title}
                       </Link>
                     </h3>
-                    <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                    <p className="text-brand-accent mb-4">{post.excerpt}</p>
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center"
+                      className="text-brand-accent hover:text-brand-primary font-medium inline-flex items-center"
                     >
                       Leer más
                       <ArrowRight className="ml-1 h-4 w-4" />
@@ -63,7 +63,7 @@ export function BlogPreview() {
           </>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-500">No hay artículos publicados aún.</p>
+            <p className="text-brand-accent">No hay artículos publicados aún.</p>
           </div>
         )}
       </div>

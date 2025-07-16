@@ -1,6 +1,8 @@
 "use client"
 
 import { FeaturedSlideshow } from "./featured-slideshow"
+import Link from "next/link"
+import { Button } from "./ui/button"
 
 export function SlideshowSection() {
   return (
@@ -22,9 +24,14 @@ export function SlideshowSection() {
           showViewGalleryButton={true}
         />
 
-        {/* Additional Info */}
         <div className="mt-8 text-center">
-          <p className="text-gray-600 text-sm">
+          <Button asChild variant="outline" size="lg">
+            <Link href="/galeria">
+              Ver todos los proyectos
+              <svg className="ml-2 h-4 w-4 inline-block" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </Link>
+          </Button>
+          <p className="text-gray-600 text-sm mt-4">
             Usa las flechas del teclado para navegar • Presiona espacio para pausar/reanudar
           </p>
         </div>

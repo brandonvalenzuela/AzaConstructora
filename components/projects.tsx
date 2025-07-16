@@ -1,4 +1,6 @@
 import Image from "next/image"
+import Link from "next/link"
+import { Button } from "./ui/button"
 
 const projects = [
   {
@@ -36,8 +38,8 @@ export function Projects() {
     <section id="proyectos" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Proyectos Destacados</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-brand-primary mb-4">Proyectos Destacados</h2>
+          <p className="text-xl text-brand-accent max-w-3xl mx-auto">
             Conoce algunos de nuestros proyectos más emblemáticos que demuestran nuestra experiencia y calidad
           </p>
         </div>
@@ -51,18 +53,27 @@ export function Projects() {
               <div className="relative h-64">
                 <Image src={project.image || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
                 <div className="absolute top-4 left-4">
-                  <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <span className="bg-brand-accent text-white px-3 py-1 rounded-full text-sm font-medium">
                     {project.category}
                   </span>
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{project.title}</h3>
-                <p className="text-gray-600">{project.description}</p>
+                <h3 className="text-xl font-semibold text-brand-primary mb-2">{project.title}</h3>
+                <p className="text-brand-accent">{project.description}</p>
               </div>
             </div>
           ))}
+          
         </div>
+      </div>
+      <div className="text-center mt-12">
+        <Button asChild variant="outline" size="lg">
+          <Link href="/galeria">
+            Ver todos los proyectos
+            <svg className="ml-2 h-4 w-4 inline-block" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          </Link>
+        </Button>
       </div>
     </section>
   )

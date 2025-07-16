@@ -114,11 +114,11 @@ export function ImageGallery({ onImageSelect, selectionMode = false }: ImageGall
             <div
               key={image.id}
               className={`group relative bg-white rounded-lg border overflow-hidden hover:shadow-lg transition-shadow ${
-                selectionMode ? "cursor-pointer hover:border-blue-500" : ""
+                selectionMode ? "cursor-pointer hover:border-brand-primary" : ""
               }`}
               onClick={() => handleImageClick(image)}
             >
-              <div className="aspect-square bg-gray-100">
+              <div className="aspect-square bg-brand-accent/10">
                 <img
                   src={image.url || "/placeholder.svg"}
                   alt={image.alt || image.name}
@@ -128,8 +128,8 @@ export function ImageGallery({ onImageSelect, selectionMode = false }: ImageGall
 
               <div className="p-3">
                 <p className="text-sm font-medium truncate">{image.name}</p>
-                <p className="text-xs text-gray-500">{formatFileSize(image.size)}</p>
-                {image.alt && <p className="text-xs text-gray-600 mt-1 truncate">Alt: {image.alt}</p>}
+                <p className="text-xs text-brand-accent">{formatFileSize(image.size)}</p>
+                {image.alt && <p className="text-xs text-brand-primary mt-1 truncate">Alt: {image.alt}</p>}
               </div>
 
               {!selectionMode && (

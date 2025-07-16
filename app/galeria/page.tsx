@@ -9,11 +9,11 @@ export default function GaleriaPage() {
       <Header />
       <main className="pt-20">
         {/* Featured Slideshow at top of gallery */}
-        <section className="py-12 bg-gray-50">
+        <section className="py-12 bg-brand-accent/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Proyectos Destacados</h2>
-              <p className="text-gray-600">Nuestros trabajos más recientes y destacados</p>
+              <h2 className="text-2xl font-bold text-brand-primary mb-2">Proyectos Destacados</h2>
+              <p className="text-brand-accent">Nuestros trabajos más recientes y destacados</p>
             </div>
             <FeaturedSlideshow
               autoPlay={true}
