@@ -47,7 +47,7 @@ class ProjectManager {
 
         return `
             <div class="project-card" data-category="${category}">
-                <a href="proyecto-detalle.html?id=${id}" class="block">
+                <a href="/proyecto-detalle?id=${id}" class="block">
                     <div class="bg-gray-800/50 rounded-lg overflow-hidden group hover:transform hover:scale-105 transition-all duration-300">
                         <div class="relative overflow-hidden">
                             <img src="${imageUrl}" 
