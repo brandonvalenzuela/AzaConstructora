@@ -46,9 +46,9 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Servir archivos estáticos
 app.use(express.static(path.join(__dirname)));
 
-// Ruta específica para proyecto-detalle.html para asegurar que los parámetros de la URL se mantengan
+// Ruta específica para proyecto-detalle para asegurar que los parámetros de la URL se mantengan
 app.get('/proyecto-detalle', (req, res) => {
-    res.sendFile(path.join(__dirname, 'proyecto-detalle.html'));
+    res.sendFile(path.join(__dirname, 'proyecto-detalle'));
 });
 
 // Rutas de la API
