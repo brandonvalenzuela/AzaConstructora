@@ -1,0 +1,45 @@
+<div class="contact-form-container">
+    <form class="bg-gray-800/50 p-8 rounded-lg" id="contact-form">
+        <!-- Campo oculto para timestamp -->
+        <input type="hidden" name="time" id="time-contact">
+        <div class="mb-6">
+            <label for="name-contact" class="block text-gray-300 mb-2">Nombre Completo</label>
+            <input type="text" id="name-contact" name="name" class="form-input w-full px-4 py-3 rounded-lg text-black" placeholder="Tu nombre" required>
+        </div>
+        
+        <div class="mb-6">
+            <label for="email-contact" class="block text-gray-300 mb-2">Correo Electrónico</label>
+            <input type="email" id="email-contact" name="email" class="form-input w-full px-4 py-3 rounded-lg text-black" placeholder="tu@email.com" required>
+        </div>
+        
+        <div class="mb-6">
+            <label for="phone-contact" class="block text-gray-300 mb-2">Teléfono</label>
+            <input type="tel" id="phone-contact" name="phone" class="form-input w-full px-4 py-3 rounded-lg text-black" placeholder="Tu número de teléfono">
+        </div>
+        
+        <div class="mb-6">
+            <label for="project-contact" class="block text-gray-300 mb-2">Tipo de Proyecto</label>
+            <select id="project-contact" name="project" class="form-input w-full px-4 py-3 rounded-lg text-white bg-transparent border border-white">
+                <option value="" class="bg-gray-800">Selecciona una opción</option>
+                <option value="Obra Civil" class="bg-gray-800">Obra Civil</option>
+                <option value="Demolición" class="bg-gray-800">Demolición</option>
+                <option value="Movimiento de Tierras" class="bg-gray-800">Movimiento de Tierras</option>
+                <option value="Industrial" class="bg-gray-800">Industrial</option>
+                <option value="Edificacion" class="bg-gray-800">Edificacion</option>
+                <option value="Infraestructura" class="bg-gray-800">Infraestructura</option>
+                <option value="Supervisión" class="bg-gray-800">Supervisión</option>
+                <option value="Mantenimiento" class="bg-gray-800">Mantenimiento</option>
+                <option value="other" class="bg-gray-800">Otro</option>
+            </select>
+        </div>
+        
+        <div class="mb-8">
+            <label for="message-contact" class="block text-gray-300 mb-2">Mensaje</label>
+            <textarea id="message-contact" name="message" rows="5" class="form-input w-full px-4 py-3 rounded-lg text-black" placeholder="Cuéntanos sobre tu proyecto de manera resumida" required></textarea>
+        </div>
+        
+        <button type="submit" class="btn-accent w-full font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105">
+            Enviar Mensaje
+        </button>
+    </form>
+</div>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Mensaje de Contacto - AZA Constructora</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #0d1b2a; color: #e5e5e5;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #0d1b2a; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); border: 1px solid #8d8771; border-radius: 12px; overflow: hidden;">
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #8d8771 0%, #a19c86 100%); padding: 30px 20px; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold; font-family: 'Playfair Display', serif; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">🏗️ AZA CONSTRUCTORA</h1>
+            <p style="color: #ffffff; margin: 10px 0 0 0; font-size: 16px;">Nuevo Mensaje de Contacto</p>
+        </div>
+
+        <!-- Alert Banner -->
+        <div style="background-color: #d4af37; padding: 15px 20px; text-align: center;">
+            <p style="margin: 0; color: #1a1a1a; font-weight: bold; font-size: 14px;">📧 MENSAJE RECIBIDO - RESPONDER A LA BREVEDAD</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+             
+            <!-- Priority Banner -->
+            <div class="priority-banner">
+                ⚡ CONTACTO PRIORITARIO - RESPONDER PRONTO
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <h3 style="color: #e5e5e5; margin: 0 0 15px 0; font-size: 18px; font-family: 'Playfair Display', serif;">📋 Información del Cliente</h3>
+                 
+                <div class="info-row">
+                    <strong class="info-label">👤 Nombre:</strong> 
+                    <span class="info-value">{{name}}</span>
+                </div>
+                 
+                <div class="info-row">
+                    <strong class="info-label">📧 Email:</strong> 
+                    <a href="mailto:{{email}}?subject=Re: Consulta sobre {{project}}&body=Hola {{name}},%0D%0A%0D%0AGracias por contactarnos..." style="color: #8d8771; text-decoration: none;">{{email}}</a>
+                </div>
+                 
+                <div class="info-row">
+                    <strong class="info-label">📞 Teléfono:</strong> 
+                    <a href="tel:{{phone}}" style="color: #8d8771; text-decoration: none;">{{phone}}</a>
+                </div>
+                 
+                <div class="info-row">
+                    <strong class="info-label">🏗️ Proyecto:</strong> 
+                    <span class="project-tag">{{project}}</span>
+                </div>
+            </div>
+
+            <!-- Message Section -->
+            <div class="message-section">
+                <h3 class="message-title">💬 Mensaje del Cliente</h3>
+                <div class="message-content">{{message}}</div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="mailto:{{email}}?subject=Re:%20Consulta%20sobre%20{{project}}&body=Hola%20{{name}},%0D%0A%0D%0AGracias%20por%20contactarnos.%20Hemos%20recibido%20tu%20consulta%20sobre%20{{project}}%20y%20nos%20pondremos%20en%20contacto%20contigo%20pronto.%0D%0A%0D%0ASaludos,%0D%0AAZA%20Constructora" 
+                   class="btn btn-primary">
+                    📧 Responder Email
+                </a>
+                
+                <a href="tel:{{phone}}" 
+                   class="btn btn-secondary">
+                    📞 Llamar Cliente
+                </a>
+            </div>
+
+            <!-- Timestamp -->
+            <div class="timestamp">
+                Recibido: {{time}}
+            </div>
+
+            <!-- Priority Indicator -->
+            <div style="background: linear-gradient(90deg, #ff6b6b 0%, #ffa500 100%); padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0;">
+                <p style="margin: 0; color: #ffffff; font-weight: bold; font-size: 14px;">⚡ PRIORIDAD ALTA - Cliente esperando respuesta</p>
+            </div>
+
+            <!-- Statistics -->
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <h4 style="margin: 0 0 10px 0; color: #2c3e50; font-size: 14px;">📊 Información Adicional:</h4>
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <div style="text-align: center; margin: 5px;">
+                        <div style="color: #d4af37; font-weight: bold; font-size: 16px;">{{project}}</div>
+                        <div style="color: #7f8c8d; font-size: 12px;">Tipo de Proyecto</div>
+                    </div>
+                    <div style="text-align: center; margin: 5px;">
+                        <div style="color: #17a2b8; font-weight: bold; font-size: 16px;">NUEVO</div>
+                        <div style="color: #7f8c8d; font-size: 12px;">Estado</div>
+                    </div>
+                    <div style="text-align: center; margin: 5px;">
+                        <div style="color: #28a745; font-weight: bold; font-size: 16px;">WEB</div>
+                        <div style="color: #7f8c8d; font-size: 12px;">Origen</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p style="margin: 0; font-family: 'Playfair Display', serif; font-weight: bold;">🏗️ <strong style="color: #e5e5e5;">AZA CONSTRUCTORA</strong> | Construyendo el futuro</p>
+            <p style="margin: 8px 0 0 0; opacity: 0.8;">Este mensaje fue enviado desde el formulario de contacto de nuestro sitio web</p>
+        </div>
+    </div>
+
+    <!-- Mobile Responsive Styles -->
+    <style>
+        .content {
+            padding: 30px;
+            background: #0d1b2a;
+        }
+        .priority-banner {
+            background: #dc2626;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin: -30px -30px 20px -30px;
+        }
+        .contact-info {
+            background: rgba(141, 135, 113, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(141, 135, 113, 0.3);
+        }
+        .info-row {
+            display: flex;
+            margin: 10px 0;
+            align-items: center;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #94a3b8;
+            min-width: 80px;
+            margin-right: 15px;
+        }
+        .info-value {
+            color: #e5e5e5;
+        }
+        .project-tag {
+            display: inline-block;
+            background: #8d8771;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .message-section {
+            background: rgba(141, 135, 113, 0.05);
+            border-left: 4px solid #8d8771;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .message-title {
+            font-weight: bold;
+            color: #e5e5e5;
+            margin-bottom: 10px;
+        }
+        .message-content {
+            line-height: 1.6;
+            color: #94a3b8;
+        }
+        .action-buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 0 10px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: #8d8771;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #a19c86;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        .footer {
+            background: rgba(141, 135, 113, 0.2);
+            color: #94a3b8;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .timestamp {
+            color: #94a3b8;
+            font-size: 12px;
+            text-align: right;
+            margin-top: 20px;
+        }
+        @media only screen and (max-width: 600px) {
+            .mobile-stack {
+                display: block !important;
+                width: 100% !important;
+            }
+            .mobile-center {
+                text-align: center !important;
+            }
+            .mobile-padding {
+                padding: 10px !important;
+            }
+        }
+    </style>
+</body>
+</html>

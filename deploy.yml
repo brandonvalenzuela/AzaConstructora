@@ -1,0 +1,79 @@
+# Pipeline de Deploy - AZA Constructora
+# Archivo de configuración para automatizar el despliegue
+
+name: Deploy AZA Constructora Website
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Instalar dependencias
+      run: npm ci
+      
+    - name: Crear archivo .env desde secrets
+      run: |
+        echo "PORT=3000" >> .env
+        echo "NODE_ENV=production" >> .env
+        echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}" >> .env
+        echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" >> .env
+        echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> .env
+        echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> .env
+        echo "SMTP_PASS=${{ secrets.SMTP_PASS }}" >> .env
+        echo "CONTACT_EMAIL=${{ secrets.CONTACT_EMAIL }}" >> .env
+        echo "EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID }}" >> .env
+        echo "EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID }}" >> .env
+        echo "EMAILJS_PUBLIC_KEY=${{ secrets.EMAILJS_PUBLIC_KEY }}" >> .env
+        
+    - name: Generar configuración de EmailJS
+      run: node generate-config.js
+      
+    - name: Verificar archivos generados
+      run: |
+        ls -la js/
+        cat js/config.js
+        
+    - name: Ejecutar tests (si existen)
+      run: npm test --if-present
+      
+    - name: Build del proyecto
+      run: npm run build --if-present
+      
+    - name: Deploy a servidor
+      run: |
+        echo "🚀 Desplegando a producción..."
+        # Aquí agregar comandos específicos de deploy según el proveedor
+        # Ejemplos:
+        # - rsync para servidor propio
+        # - aws s3 sync para S3
+        # - vercel deploy para Vercel
+        # - netlify deploy para Netlify
+        
+    - name: Notificar éxito
+      run: echo "✅ Deploy completado exitosamente"
+      
+# Variables de entorno requeridas en GitHub Secrets:
+# - FRONTEND_URL: URL del frontend en producción
+# - SMTP_HOST: Servidor SMTP
+# - SMTP_PORT: Puerto SMTP
+# - SMTP_USER: Usuario SMTP
+# - SMTP_PASS: Contraseña SMTP
+# - CONTACT_EMAIL: Email de contacto
+# - EMAILJS_SERVICE_ID: ID del servicio EmailJS
+# - EMAILJS_TEMPLATE_ID: ID del template EmailJS
+# - EMAILJS_PUBLIC_KEY: Clave pública EmailJS

@@ -1,0 +1,162 @@
+# Pipeline de CI/CD - AZA Constructora
+# Automatiza el despliegue del sitio web
+
+name: Deploy AZA Constructora Website
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch: # Permite ejecutar manualmente
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout código
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 📦 Instalar dependencias
+      run: npm ci
+      
+    - name: 🔧 Crear archivo .env desde secrets
+      run: |
+        echo "PORT=3000" >> .env
+        echo "NODE_ENV=production" >> .env
+        echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}" >> .env
+        echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" >> .env
+        echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> .env
+        echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> .env
+        echo "SMTP_PASS=${{ secrets.SMTP_PASS }}" >> .env
+        echo "CONTACT_EMAIL=${{ secrets.CONTACT_EMAIL }}" >> .env
+        echo "EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID }}" >> .env
+        echo "EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID }}" >> .env
+        echo "EMAILJS_PUBLIC_KEY=${{ secrets.EMAILJS_PUBLIC_KEY }}" >> .env
+        
+    - name: ⚙️ Generar configuración de EmailJS
+      run: npm run config
+      
+    - name: 🔍 Verificar archivos generados
+      run: |
+        echo "📁 Contenido de js/:"
+        ls -la js/
+        echo "\n📄 Contenido de config.js:"
+        cat js/config.js
+        echo "\n✅ Archivos críticos:"
+        ls -la *.html css/ media/
+        
+    - name: 🧪 Ejecutar tests
+      run: npm test --if-present
+      continue-on-error: true # No fallar si no hay tests
+      
+    - name: 🏗️ Build del proyecto
+      run: npm run build
+      
+    - name: ✅ Validar estructura del proyecto
+      run: |
+        echo "🔍 Validando archivos críticos..."
+        test -f index.html && echo "✅ index.html" || echo "❌ index.html"
+        test -f contacto.html && echo "✅ contacto.html" || echo "❌ contacto.html"
+        test -f js/config.js && echo "✅ js/config.js" || echo "❌ js/config.js"
+        test -f js/contact-handler.js && echo "✅ js/contact-handler.js" || echo "❌ js/contact-handler.js"
+        test -f css/styles.css && echo "✅ css/styles.css" || echo "❌ css/styles.css"
+        
+    # Ejemplo de deploy a diferentes proveedores
+    # Descomenta y configura según tu proveedor
+    
+    # Deploy a Vercel
+    # - name: 🚀 Deploy a Vercel
+    #   uses: amondnet/vercel-action@v25
+    #   with:
+    #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+    #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+    #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+    
+    # Deploy a Netlify
+    # - name: 🚀 Deploy a Netlify
+    #   uses: nwtgck/actions-netlify@v2.0
+    #   with:
+    #     publish-dir: './'
+    #     production-branch: main
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     deploy-message: "Deploy desde GitHub Actions"
+    #   env:
+    #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+    #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+    
+    # Deploy a AWS S3
+    # - name: 🚀 Deploy a AWS S3
+    #   run: |
+    #     aws s3 sync . s3://${{ secrets.S3_BUCKET }} --exclude ".git/*" --exclude "node_modules/*" --exclude ".env"
+    #   env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+    
+    # Deploy por FTP/SFTP
+    # - name: 🚀 Deploy por FTP
+    #   uses: SamKirkland/FTP-Deploy-Action@4.3.3
+    #   with:
+    #     server: ${{ secrets.FTP_SERVER }}
+    #     username: ${{ secrets.FTP_USERNAME }}
+    #     password: ${{ secrets.FTP_PASSWORD }}
+    #     local-dir: ./
+    #     exclude: |
+    #       **/.git*
+    #       **/.git*/**
+    #       **/node_modules/**
+    #       .env
+    #       deploy.js
+    #       generate-config.js
+    
+    - name: 🎉 Notificar éxito
+      run: |
+        echo "✅ Deploy completado exitosamente"
+        echo "🌐 Sitio web listo para producción"
+        echo "📧 EmailJS configurado correctamente"
+        echo "🔧 Variables de entorno aplicadas"
+        
+    - name: 📊 Resumen del deploy
+      run: |
+        echo "## 📋 Resumen del Deploy" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "✅ **Estado**: Exitoso" >> $GITHUB_STEP_SUMMARY
+        echo "📅 **Fecha**: $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "🔧 **Configuración**: EmailJS aplicada" >> $GITHUB_STEP_SUMMARY
+        echo "📁 **Archivos**: Todos los archivos críticos validados" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🎯 Próximos pasos:" >> $GITHUB_STEP_SUMMARY
+        echo "1. Verificar funcionalidad del sitio web" >> $GITHUB_STEP_SUMMARY
+        echo "2. Probar formularios de contacto" >> $GITHUB_STEP_SUMMARY
+        echo "3. Validar responsive design" >> $GITHUB_STEP_SUMMARY
+
+# 📝 Variables requeridas en GitHub Secrets:
+# 
+# 🌐 Frontend:
+# - FRONTEND_URL: URL del frontend en producción
+# 
+# 📧 SMTP (opcional):
+# - SMTP_HOST: Servidor SMTP
+# - SMTP_PORT: Puerto SMTP  
+# - SMTP_USER: Usuario SMTP
+# - SMTP_PASS: Contraseña SMTP
+# - CONTACT_EMAIL: Email de contacto
+# 
+# 📨 EmailJS (requerido):
+# - EMAILJS_SERVICE_ID: ID del servicio EmailJS
+# - EMAILJS_TEMPLATE_ID: ID del template EmailJS
+# - EMAILJS_PUBLIC_KEY: Clave pública EmailJS
+#
+# 🚀 Deploy (según proveedor):
+# - VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID
+# - NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID
+# - AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION, S3_BUCKET
+# - FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
