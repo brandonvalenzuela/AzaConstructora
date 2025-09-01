@@ -29,14 +29,7 @@ jobs:
       
     - name: 🔧 Crear archivo .env desde secrets
       run: |
-        echo "PORT=3000" >> .env
-        echo "NODE_ENV=production" >> .env
         echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}" >> .env
-        echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" >> .env
-        echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> .env
-        echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> .env
-        echo "SMTP_PASS=${{ secrets.SMTP_PASS }}" >> .env
-        echo "CONTACT_EMAIL=${{ secrets.CONTACT_EMAIL }}" >> .env
         echo "EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID }}" >> .env
         echo "EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID }}" >> .env
         echo "EMAILJS_PUBLIC_KEY=${{ secrets.EMAILJS_PUBLIC_KEY }}" >> .env
