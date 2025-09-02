@@ -1,82 +1,62 @@
-<div style="font-family: 'Inter', sans-serif; max-width: 600px; margin: 0 auto; background-color: #0d1b2a; border-radius: 12px; overflow: hidden; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); border: 1px solid #8d8771;">
+<div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; max-width: 560px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e5e7eb;">
   <!-- Header -->
-  <div style="background: linear-gradient(135deg, #8d8771 0%, #a19c86 100%); padding: 30px 20px; text-align: center;">
-    <h1 style="color: white; margin: 0; font-size: 28px; font-weight: bold; font-family: 'Playfair Display', serif; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">🏗️ AZA CONSTRUCTORA</h1>
-    <p style="color: white; margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Nuevo Mensaje de Contacto</p>
-  </div>
-
-  <!-- Alert -->
-  <div style="background-color: #d4af37; padding: 12px 20px; text-align: center;">
-    <p style="margin: 0; color: #1a1a1a; font-weight: bold; font-size: 13px;">📧 MENSAJE RECIBIDO - RESPONDER A LA BREVEDAD</p>
+  <div style="background-color: #0d1b2a; padding: 24px; text-align: center;">
+    <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.3px;">AZA CONSTRUCTORA</h1>
+    <p style="color: #94a3b8; margin: 4px 0 0 0; font-size: 14px;">Nuevo contacto</p>
   </div>
 
   <!-- Content -->
-  <div style="padding: 30px; background-color: #0d1b2a;">
+  <div style="padding: 32px 24px;">
     
-    <!-- Priority Banner -->
-    <div style="background: #dc2626; color: white; padding: 10px; text-align: center; font-weight: bold; margin: -30px -30px 20px -30px;">
-      ⚡ CONTACTO PRIORITARIO - RESPONDER PRONTO
-    </div>
-
     <!-- Contact Information -->
-    <div style="background: rgba(141, 135, 113, 0.1); border-radius: 8px; padding: 20px; margin: 20px 0; border: 1px solid rgba(141, 135, 113, 0.3);">
-      <h3 style="color: #e5e5e5; margin: 0 0 15px 0; font-size: 18px; font-family: 'Playfair Display', serif;">📋 Información del Cliente</h3>
+    <div style="margin-bottom: 24px;">
+      <h2 style="color: #111827; margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">Cliente</h2>
       
-      <div style="margin: 10px 0; display: flex; align-items: center;">
-        <strong style="color: #94a3b8; min-width: 80px; margin-right: 15px;">👤 Nombre:</strong> 
-        <span style="color: #e5e5e5;">{{name}}</span>
-      </div>
-      
-      <div style="margin: 10px 0; display: flex; align-items: center;">
-        <strong style="color: #94a3b8; min-width: 80px; margin-right: 15px;">📧 Email:</strong> 
-        <a href="mailto:{{email}}?subject=Re: Consulta sobre {{project}}&body=Hola {{name}},%0D%0A%0D%0AGracias por contactarnos..." style="color: #8d8771; text-decoration: none;">{{email}}</a>
-      </div>
-      
-      <div style="margin: 10px 0; display: flex; align-items: center;">
-        <strong style="color: #94a3b8; min-width: 80px; margin-right: 15px;">📞 Teléfono:</strong> 
-        <a href="tel:{{phone}}" style="color: #8d8771; text-decoration: none;">{{phone}}</a>
-      </div>
-      
-      <div style="margin: 10px 0; display: flex; align-items: center;">
-        <strong style="color: #94a3b8; min-width: 80px; margin-right: 15px;">🏗️ Proyecto:</strong> 
-        <span style="background: #8d8771; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold;">{{project}}</span>
-      </div>
-      
-      <div style="margin: 10px 0; display: flex; align-items: center;">
-        <strong style="color: #94a3b8; min-width: 80px; margin-right: 15px;">📅 Fecha:</strong> 
-        <span style="color: #94a3b8; font-size: 13px;">{{time}}</span>
-      </div>
+      <div>
+         <div style="margin-bottom: 12px;">
+           <span style="color: #6b7280; font-size: 14px; display: block; margin-bottom: 2px;">Nombre</span>
+           <span style="color: #111827; font-size: 16px; font-weight: 500;">{{name}}</span>
+         </div>
+         
+         <div style="margin-bottom: 12px;">
+           <span style="color: #6b7280; font-size: 14px; display: block; margin-bottom: 2px;">Email</span>
+           <a href="mailto:{{email}}" style="color: #8d8771; font-size: 16px; font-weight: 500; text-decoration: none;">{{email}}</a>
+         </div>
+         
+         <div style="margin-bottom: 12px;">
+           <span style="color: #6b7280; font-size: 14px; display: block; margin-bottom: 2px;">Teléfono</span>
+           <a href="tel:{{phone}}" style="color: #8d8771; font-size: 16px; font-weight: 500; text-decoration: none;">{{phone}}</a>
+         </div>
+         
+         <div style="margin-bottom: 12px;">
+           <span style="color: #6b7280; font-size: 14px; display: block; margin-bottom: 2px;">Proyecto</span>
+           <span style="color: #111827; font-size: 16px; font-weight: 500;">{{project}}</span>
+           </div>
+         </div>
+       </div>
     </div>
 
-    <!-- Message Section -->
-    <div style="background: rgba(141, 135, 113, 0.05); border-left: 4px solid #8d8771; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0;">
-      <h3 style="color: #e5e5e5; margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">💬 Mensaje del Cliente</h3>
-      <div style="line-height: 1.6; color: #94a3b8; font-size: 14px; white-space: pre-wrap;">{{message}}</div>
+    <!-- Message -->
+    <div style="margin-bottom: 24px;">
+      <h3 style="color: #111827; margin: 0 0 12px 0; font-size: 18px; font-weight: 600;">Mensaje</h3>
+      <div style="color: #374151; font-size: 15px; line-height: 1.6; padding: 16px; background-color: #f9fafb; border-radius: 6px; border-left: 3px solid #8d8771;">{{message}}</div>
     </div>
 
-    <!-- Action Buttons -->
-    <div style="text-align: center; margin: 30px 0;">
-      <a href="mailto:{{email}}?subject=Re:%20Consulta%20sobre%20{{project}}&body=Hola%20{{name}},%0D%0A%0D%0AGracias%20por%20contactarnos.%20Hemos%20recibido%20tu%20consulta%20sobre%20{{project}}%20y%20nos%20pondremos%20en%20contacto%20contigo%20pronto.%0D%0A%0D%0ASaludos,%0D%0AAZA%20Constructora" 
-         style="display: inline-block; background: #8d8771; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; margin: 0 10px; transition: all 0.3s ease;">
-        📧 Responder Email
-      </a>
-      
-      <a href="tel:{{phone}}" 
-         style="display: inline-block; background: #6b7280; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; margin: 0 10px;">
-        📞 Llamar Cliente
-      </a>
+    <!-- Actions -->
+    <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+      <a href="mailto:{{email}}" style="display: inline-block; background-color: #8d8771; color: white; padding: 10px 16px; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 14px;">Responder</a>
+      <a href="tel:{{phone}}" style="display: inline-block; background-color: #6b7280; color: white; padding: 10px 16px; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 14px;">Llamar</a>
     </div>
 
     <!-- Timestamp -->
-    <div style="color: #94a3b8; font-size: 12px; text-align: right; margin-top: 20px; border-top: 1px solid rgba(141, 135, 113, 0.3); padding-top: 15px;">
-      Recibido: {{time}}
+    <div style="text-align: center; color: #9ca3af; font-size: 13px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
+      {{time}}
     </div>
 
   </div>
 
   <!-- Footer -->
-  <div style="background: rgba(141, 135, 113, 0.2); color: #94a3b8; padding: 20px; text-align: center; font-size: 12px;">
-    <p style="margin: 0; font-family: 'Playfair Display', serif; font-weight: bold;">🏗️ <strong style="color: #e5e5e5;">AZA CONSTRUCTORA</strong> | Construyendo el futuro</p>
-    <p style="margin: 8px 0 0 0; opacity: 0.8;">Este mensaje fue enviado desde el formulario de contacto de nuestro sitio web</p>
+  <div style="background-color: #f9fafb; padding: 16px 24px; text-align: center; border-top: 1px solid #e5e7eb;">
+    <div style="color: #6b7280; font-size: 13px;">AZA Constructora © 2024</div>
   </div>
 </div>

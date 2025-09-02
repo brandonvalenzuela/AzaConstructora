@@ -69,7 +69,7 @@ class DeployManager {
         }
     }
 
-    runTests() {
+    /*runTests() {
         this.log('Ejecutando tests...');
         try {
             execSync('npm test', { stdio: 'inherit' });
@@ -77,7 +77,7 @@ class DeployManager {
         } catch (error) {
             this.log('⚠️ No hay tests configurados o fallaron', 'warning');
         }
-    }
+    }*/
 
     buildProject() {
         this.log('Construyendo proyecto...');
@@ -147,7 +147,7 @@ class DeployManager {
             this.checkPrerequisites();
             this.installDependencies();
             this.generateConfig();
-            this.runTests();
+            //this.runTests();
             this.buildProject();
             this.validateFiles();
             

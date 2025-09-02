@@ -36,3 +36,10 @@ Thumbs.db
 
 # Archivos de log
 *.log
+
+# Templates de Email
+emailjs-template-*.html
+EMAILJS-TEMPLATE-*.md
+*.email.html
+email-templates/
+templates/email/
