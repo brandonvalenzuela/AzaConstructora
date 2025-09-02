@@ -62,6 +62,14 @@ jobs:
         test -f js/contact-handler.js && echo "✅ js/contact-handler.js" || echo "❌ js/contact-handler.js"
         test -f css/styles.css && echo "✅ css/styles.css" || echo "❌ css/styles.css"
         
+    - name: 🚀 Deploy a GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        exclude_assets: '.github,node_modules,.env,deploy.js,generate-config.js,package*.json,*.md'
+        
     # Ejemplo de deploy a diferentes proveedores
     # Descomenta y configura según tu proveedor
     
