@@ -6,12 +6,13 @@ El error `GET https://brandonvalenzuela.github.io/AzaConstructora/js/config.js n
 
 ## ✅ Solución Implementada
 
-He agregado la configuración automática de GitHub Pages al workflow de CI/CD que:
+He configurado GitHub Pages con las **acciones oficiales de GitHub** que:
 
 1. ✅ **Genera el archivo `config.js`** con las variables de EmailJS
-2. ✅ **Despliega automáticamente** a GitHub Pages usando `peaceiris/actions-gh-pages@v3`
+2. ✅ **Despliega automáticamente** usando acciones oficiales de GitHub Pages
 3. ✅ **Incluye todos los archivos necesarios** (HTML, CSS, JS, config.js)
-4. ✅ **Excluye archivos innecesarios** (node_modules, .env, etc.)
+4. ✅ **Configura permisos correctos** (contents, pages, id-token)
+5. ✅ **Usa environment github-pages** para mayor seguridad
 
 ## 🔧 Configuración Manual Requerida
 
@@ -21,10 +22,10 @@ He agregado la configuración automática de GitHub Pages al workflow de CI/CD q
 2. Haz clic en **Settings** (Configuración)
 3. Desplázate hacia abajo hasta la sección **Pages**
 4. En **Source**, selecciona:
-   - **Deploy from a branch**
-   - **Branch**: `gh-pages`
-   - **Folder**: `/ (root)`
-5. Haz clic en **Save**
+   - **GitHub Actions**
+5. El workflow se ejecutará automáticamente y configurará Pages
+
+> **Nota**: Ya no necesitas configurar una rama específica, GitHub Actions manejará todo automáticamente.
 
 ### Paso 2: Verificar el Deploy
 
