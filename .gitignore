@@ -43,3 +43,6 @@ EMAILJS-TEMPLATE-*.md
 *.email.html
 email-templates/
 templates/email/
+
+# Configuración de EmailJS
+config.js
