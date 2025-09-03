@@ -34,6 +34,10 @@ function navigateToHome() {
 fetch(`${basePath}components/header.html`)
     .then(response => response.text())
     .then(data => {
+        // Ajustar rutas de imágenes según la ubicación
+        if (window.location.pathname.includes('/pages/')) {
+            data = data.replace(/src="assets\/images\//g, 'src="../assets/images/');
+        }
         document.getElementById('header-placeholder').innerHTML = data;
         // Reinicializar eventos del menú móvil después de cargar el header
         initializeMobileMenu();
@@ -45,6 +49,10 @@ fetch(`${basePath}components/header.html`)
 fetch(`${basePath}components/footer.html`)
     .then(response => response.text())
     .then(data => {
+        // Ajustar rutas de imágenes según la ubicación
+        if (window.location.pathname.includes('/pages/')) {
+            data = data.replace(/src="assets\/images\//g, 'src="../assets/images/');
+        }
         document.getElementById('footer-placeholder').innerHTML = data;
     });
 
