@@ -80,6 +80,8 @@ jobs:
         sed -i 's|src="js/|src="js/|g' *.html
         sed -i 's|href="assets/|href="assets/|g' *.html
         sed -i 's|src="assets/|src="assets/|g' *.html
+        # Ajustar rutas de favicon (de ../assets/ a assets/)
+        sed -i 's|href="../assets/images/aza-constructora.png"|href="assets/images/aza-constructora.png"|g' *.html
         # Ajustar rutas de componentes
         sed -i 's|components/header.html|components/header.html|g' *.html
         sed -i 's|components/footer.html|components/footer.html|g' *.html
