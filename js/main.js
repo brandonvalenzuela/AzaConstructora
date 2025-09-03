@@ -43,6 +43,14 @@ fetch(`${basePath}components/header.html`)
         initializeMobileMenu();
         // Configurar el efecto de scroll del header después de cargarlo
         setupHeaderScrollEffect();
+        
+        // Ajustar rutas de imágenes después de cargar el contenido en el DOM
+        if (window.location.pathname.includes('/pages/')) {
+            const headerImages = document.querySelectorAll('#header-placeholder img[src^="assets/"]');
+            headerImages.forEach(img => {
+                img.src = img.src.replace('/pages/assets/', '/assets/');
+            });
+        }
     });
 
 // Cargar el footer dinámicamente
@@ -54,6 +62,14 @@ fetch(`${basePath}components/footer.html`)
             data = data.replace(/src="assets\/images\//g, 'src="../assets/images/');
         }
         document.getElementById('footer-placeholder').innerHTML = data;
+        
+        // Ajustar rutas de imágenes después de cargar el contenido en el DOM
+        if (window.location.pathname.includes('/pages/')) {
+            const footerImages = document.querySelectorAll('#footer-placeholder img[src^="assets/"]');
+            footerImages.forEach(img => {
+                img.src = img.src.replace('/pages/assets/', '/assets/');
+            });
+        }
     });
 
 // Función para inicializar el menú móvil
