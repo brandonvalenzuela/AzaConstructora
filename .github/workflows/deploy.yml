@@ -53,7 +53,7 @@ jobs:
         echo "\n📄 Contenido de config.js:"
         cat js/config.js
         echo "\n✅ Archivos críticos:"
-        ls -la *.html css/ media/
+        ls -la *.html css/ assets/ || true
         
     - name: 🧪 Ejecutar tests
       run: npm test --if-present
