@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Función para cargar el footer
     function loadFooter() {
-        fetch('/footer.html')
+        // Detectar la ruta base según la ubicación del archivo
+        const basePath = window.location.pathname.includes('/pages/') ? '../' : '';
+        
+        fetch(`${basePath}components/footer.html`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('No se pudo cargar el footer');

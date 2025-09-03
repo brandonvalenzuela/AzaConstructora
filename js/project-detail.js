@@ -117,7 +117,7 @@ class ProjectDetailManager {
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-2">${project.title}</h3>
                         <p class="text-gray-600 mb-4">${project.description}</p>
-                        <button onclick="window.location.href='proyecto-detalle?id=${project.id}'" class="btn-primary px-6 py-2 rounded-lg font-semibold inline-block cursor-pointer">
+                        <button onclick="window.location.href='proyecto-detalle.html?id=${project.id}'" class="btn-primary px-6 py-2 rounded-lg font-semibold inline-block cursor-pointer">
                             Ver Detalles
                         </button>
                     </div>

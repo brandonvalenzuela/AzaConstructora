@@ -13,59 +13,84 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <link rel="icon" href="media\aza-constructora.png" type="image/png">
     
     <!-- CSS externo -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body class="antialiased">
 
-    <!-- El header se cargará dinámicamente desde header.html -->
+    <!-- El header se cargará dinámicamente desde ../components/header.html -->
     <div id="header-placeholder"></div>
 
-    <section class="relative h-[50vh] flex items-center justify-center text-center overflow-hidden">
-        <div class="absolute inset-0 z-0">
+    <section class="hero-section-modern relative h-[50vh] flex items-center justify-center overflow-hidden">
+        <!-- Contenedor de fondo con efectos -->
+        <div class="hero-background-container">
             <img src="https://images.unsplash.com/photo-1654826017649-5c3742c05fca?q=80&w=1170&auto=format&fit=crop" 
-                 alt="Imagen de equipo de ingenieros" class="w-full h-full object-cover">
+                 alt="Imagen de equipo de ingenieros" class="hero-image-modern">
+            <div class="hero-gradient-overlay"></div>
+            <div class="hero-pattern-overlay"></div>
         </div>
-        <div class="relative z-10 hero-overlay w-full h-full flex flex-col items-center justify-center p-6">
-            <img src="media/aza-constructora.png" alt="Logo AZA Constructora" class="h-24 mb-6 hero-logo">
-            <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight">
-                Sobre Nosotros
-            </h1>
-            <p class="mt-4 text-xl text-gray-300 font-light max-w-3xl">
-                Construyendo el futuro de Sonora con experiencia y dedicación
-            </p>
+
+        <!-- Elementos flotantes animados -->
+        <div class="floating-shape floating-shape-1"></div>
+        <div class="floating-shape floating-shape-2"></div>
+        <div class="floating-shape floating-shape-3"></div>
+
+        <!-- Contenido principal del hero -->
+        <div class="hero-content-grid">
+            <!-- Columna izquierda: Logo y título -->
+            <div class="hero-left-column">
+                <!-- Título moderno -->
+                <div class="hero-title-container">
+                    <h1 class="hero-title-modern">
+                        <span class="title-line-1">SOBRE</span>
+                        <span class="title-line-2">NOSOTROS</span>
+                    </h1>
+                    <div class="hero-title-accent"></div>
+                </div>
+            </div>
+
+            <!-- Columna derecha: Subtítulo -->
+            <div class="hero-right-column">
+                <!-- Subtítulo moderno -->
+                <p class="hero-subtitle-modern">
+                    Construyendo el futuro de Sonora con experiencia y dedicación
+                </p>
+            </div>
         </div>
     </section>
 
     <main class="container mx-auto px-6 py-20 md:py-32">
-        <section class="mb-20 md:mb-40 fade-in-section">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+         <!-- Introducción -->
+        <section class="mb-20 fade-in-section">
+            <div class="text-center mb-12">
                 <div>
                     <span class="text-sm uppercase tracking-widest text-gray-400">Nuestra Historia</span>
                     <h2 class="text-4xl md:text-5xl font-bold text-white mt-2">Más de una Década de Excelencia</h2>
-                    <div class="title-line"></div>
-                    <p class="text-gray-300 mt-8 leading-relaxed text-lg">
+                    <div class="title-line mx-auto"></div>
+                    <p class="text-gray-400 mt-6 max-w-3xl mx-auto text-lg leading-relaxed">
                         AZA Constructora nació con la visión de transformar el panorama de la construcción en Sonora. Desde nuestros inicios, hemos mantenido un compromiso inquebrantable con la calidad, la innovación y la satisfacción del cliente.
                     </p>
-                    <p class="text-gray-300 mt-6 leading-relaxed text-lg">
+                    <p class="text-gray-400 mt-6 max-w-3xl mx-auto text-lg leading-relaxed">
                         Nuestro equipo de profesionales altamente capacitados combina experiencia técnica con las últimas tecnologías para entregar proyectos que superan las expectativas y perduran en el tiempo.
                     </p>
-                    <div class="mt-8 grid grid-cols-2 gap-6">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-accent-gold">150+</div>
-                            <div class="text-gray-400 text-sm uppercase tracking-wide">Proyectos Completados</div>
+                    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="stats-card">
+                            <div class="stats-number">150+</div>
+                            <div class="stats-label">Proyectos Completados</div>
+                            <div class="stats-accent"></div>
                         </div>
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-accent-gold">12+</div>
-                            <div class="text-gray-400 text-sm uppercase tracking-wide">Años de Experiencia</div>
+                        <div class="stats-card">
+                            <div class="stats-number">12+</div>
+                            <div class="stats-label">Años de Experiencia</div>
+                            <div class="stats-accent"></div>
                         </div>
                     </div>
                 </div>
-                <div class="relative">
+                <!-- <div class="relative">
                     <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1170&auto=format&fit=crop" 
                          alt="Construcción en progreso" class="rounded-lg shadow-2xl">
                     <div class="absolute -bottom-6 -right-6 bg-accent-gold p-6 rounded-lg">
@@ -74,7 +99,7 @@
                             <div class="text-sm">Satisfacción</div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
 
@@ -189,11 +214,11 @@
         </section>
     </main>
 
-    <!-- El footer se cargará dinámicamente desde footer.html -->
+    <!-- El footer se cargará dinámicamente desde ../components/footer.html -->
     <div id="footer-placeholder"></div>
     
     <!-- JavaScript externo -->
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
 
 </body>
 </html>

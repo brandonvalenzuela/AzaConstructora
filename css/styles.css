@@ -8,34 +8,837 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', 'Roboto', sans-serif;
     background-color: var(--bg-dark-blue);
     color: var(--text-light);
+    font-weight: 400;
+    letter-spacing: 0.025em;
 }
 
-/* Tipografía para títulos, alineada con el logo */
+/* Tipografía para títulos, moderna y profesional */
 h1, h2, h3, h4, h5, h6, .font-logo {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Montserrat', 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.025em;
 }
 
-.hero-video-container {
+/* Títulos principales con mayor peso */
+h1, .font-logo {
+    font-weight: 700;
+}
+
+/* Subtítulos con peso medio */
+h2, h3 {
+    font-weight: 600;
+}
+
+/* Títulos menores */
+h4, h5, h6 {
+    font-weight: 500;
+}
+
+/* Mejoras tipográficas adicionales */
+p, span, div {
+    line-height: 1.6;
+}
+
+/* Texto de navegación más refinado */
+nav a {
+    font-weight: 500;
+    letter-spacing: 0.025em;
+}
+
+/* Botones con tipografía mejorada */
+.btn-accent {
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
+
+/* Texto de hero más impactante */
+.hero-title {
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1.1;
+}
+
+/* Subtítulos del hero */
+.hero-subtitle {
+    font-weight: 400;
+    letter-spacing: 0.025em;
+    line-height: 1.5;
+}
+
+/* ===== HERO MODERNO Y RADICAL ===== */
+.hero-modern {
+    position: relative;
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a2332 50%, #0d1b2a 100%);
+}
+
+/* Background container con múltiples capas */
+.hero-bg-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    z-index: -1;
+    z-index: 1;
 }
 
-.hero-video {
+.hero-bg-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0.3;
+    filter: contrast(1.2) brightness(0.8);
 }
 
-.hero-overlay {
-    background-color: rgba(13, 27, 42, 0.75);
+/* Gradiente dinámico superpuesto */
+.hero-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(13, 27, 42, 0.9) 0%,
+        rgba(141, 135, 113, 0.1) 30%,
+        rgba(13, 27, 42, 0.8) 70%,
+        rgba(141, 135, 113, 0.2) 100%
+    );
+    z-index: 2;
+}
+
+/* Patrón geométrico overlay */
+.hero-pattern-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(141, 135, 113, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(141, 135, 113, 0.05) 0%, transparent 50%);
+    z-index: 3;
+}
+
+/* Elementos flotantes animados */
+.hero-floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.floating-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(45deg, rgba(141, 135, 113, 0.1), rgba(141, 135, 113, 0.05));
+    backdrop-filter: blur(10px);
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 120px;
+    height: 120px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 80px;
+    height: 80px;
+    top: 60%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.shape-3 {
+    width: 60px;
+    height: 60px;
+    top: 30%;
+    right: 25%;
+    animation-delay: 4s;
+}
+
+.shape-4 {
+    width: 100px;
+    height: 100px;
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 1s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 0.6;
+    }
+}
+
+/* Grid de contenido horizontal */
+.hero-content-grid {
+    position: relative;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    min-height: 80vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+}
+
+/* Estilos específicos para heroes de páginas - pantalla completa */
+.hero-section-modern {
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section-modern .hero-background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100% !important;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-section-modern .hero-image-modern {
+    width: 100vw !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    opacity: 0.4;
+    filter: contrast(1.2) brightness(0.8);
+}
+
+
+
+/* Estilos para heroes con altura específica (fallback) */
+.hero[style*="height: 50vh"] {
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero[style*="height: 50vh"] .hero-bg-container {
+    width: 100vw !important;
+    height: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+}
+
+.hero[style*="height: 50vh"] .hero-bg-image {
+    width: 100vw !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+}
+
+.hero[style*="height: 50vh"] .hero-content-grid {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 3rem !important;
+}
+
+/* Columna izquierda */
+.hero-left-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+/* Columna derecha */
+.hero-right-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    padding-left: 2rem;
+}
+
+/* Logo moderno con glassmorphism */
+.hero-logo-container {
+    position: relative;
+    padding: 15px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: logoGlow 3s ease-in-out infinite alternate;
+    align-self: flex-start;
+}
+
+.hero-logo-modern {
+    height: 60px;
+    width: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes logoGlow {
+    0% {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(141, 135, 113, 0.3);
+    }
+    100% {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(141, 135, 113, 0.6);
+    }
+}
+
+/* Título moderno con efectos tipográficos */
+.hero-title-container {
+    position: relative;
+    margin: 1rem 0;
+}
+
+.hero-title-modern {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.title-line-1, .title-line-2, .title-line-3 {
+    display: block;
+    background: linear-gradient(135deg, #ffffff 0%, #8d8771 50%, #ffffff 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleShimmer 4s ease-in-out infinite;
+    position: relative;
+    font-size: 1em;
+    text-shadow: 0 0 30px rgba(141, 135, 113, 0.3);
+}
+
+.title-line-1 {
+    animation-delay: 0s;
+    letter-spacing: 0.1em;
+}
+
+.title-line-1::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background: linear-gradient(to bottom, transparent, #8d8771, transparent);
+    border-radius: 2px;
+    animation: lineGlow 3s ease-in-out infinite;
+}
+
+.title-line-2 {
+    animation-delay: 0.5s;
+    font-size: 1.1em;
+    letter-spacing: 0.15em;
+    margin: 0;
+    position: relative;
+}
+
+.title-line-2::after {
+    content: '';
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: #8d8771;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(141, 135, 113, 0.8);
+    animation: dotPulse 2s ease-in-out infinite;
+}
+
+.title-line-3 {
+    animation-delay: 1s;
+    letter-spacing: 0.05em;
+    position: relative;
+}
+
+.title-line-3::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #8d8771, transparent);
+    border-radius: 1px;
+    animation: underlineExpand 2s ease-in-out infinite;
+}
+
+@keyframes lineGlow {
+    0%, 100% {
+        opacity: 0.3;
+        height: 40%;
+    }
+    50% {
+        opacity: 0.8;
+        height: 80%;
+    }
+}
+
+@keyframes underlineExpand {
+    0%, 100% {
+        width: 40px;
+        opacity: 0.5;
+    }
+    50% {
+        width: 120px;
+        opacity: 1;
+    }
+}
+
+@keyframes dotPulse {
+    0%, 100% {
+        transform: translateY(-50%) scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-50%) scale(1.3);
+        opacity: 1;
+    }
+}
+
+@keyframes titleShimmer {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Acento del título */
+.hero-title-accent {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #8d8771, transparent);
+    border-radius: 2px;
+    animation: accentPulse 2s ease-in-out infinite;
+}
+
+@keyframes accentPulse {
+    0%, 100% {
+        opacity: 0.5;
+        transform: translateX(-50%) scaleX(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) scaleX(1.5);
+    }
+}
+
+/* Subtítulo moderno */
+.hero-subtitle-modern {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.1rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: left;
+    max-width: 100%;
+    margin: 0;
+    letter-spacing: 0.03em;
+    line-height: 1.7;
+}
+
+/* Botones modernos */
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0 0 0;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.btn-primary-modern {
+    position: relative;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, #8d8771, #a19c86);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(141, 135, 113, 0.3);
+}
+
+.btn-primary-modern:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(141, 135, 113, 0.5);
+}
+
+.btn-glow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary-modern:hover .btn-glow {
+    left: 100%;
+}
+
+.btn-secondary-modern {
+    padding: 1rem 2.5rem;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary-modern:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+/* Indicador de scroll moderno */
+.scroll-indicator-modern {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: scrollBounce 2s ease-in-out infinite;
+}
+
+.scroll-line {
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.6), transparent);
+    border-radius: 1px;
+}
+
+.scroll-dot {
+    width: 8px;
+    height: 8px;
+    background: #8d8771;
+    border-radius: 50%;
+    animation: dotPulse 2s ease-in-out infinite;
+}
+
+.scroll-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.2em;
+    margin-top: 0.5rem;
+}
+
+@keyframes scrollBounce {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+@keyframes dotPulse {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .hero-content-grid {
+        gap: 2rem;
+        min-height: 70vh;
+    }
+    
+    .hero-right-column {
+        padding-left: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-content-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        min-height: auto;
+        text-align: center;
+    }
+    
+    .hero-left-column,
+    .hero-right-column {
+        align-items: center;
+        text-align: center;
+    }
+    
+    .hero-right-column {
+        padding-left: 0;
+    }
+    
+    .hero-title-modern {
+        text-align: center;
+        font-size: clamp(1.8rem, 6vw, 3rem);
+    }
+    
+    .title-line-1::before,
+    .title-line-2::after,
+    .title-line-3::before {
+        display: none;
+    }
+    
+    .hero-subtitle-modern {
+        text-align: center;
+        font-size: clamp(0.9rem, 3vw, 1rem);
+    }
+    
+    .hero-buttons {
+        justify-content: center;
+        gap: 0.8rem;
+    }
+    
+    .btn-primary-modern,
+    .btn-secondary-modern {
+        padding: 0.8rem 2rem;
+        font-size: 0.9rem;
+    }
+    
+    .floating-shape {
+        display: none;
+    }
+    
+    .hero-logo-modern {
+        height: 50px;
+    }
+    
+    .hero-logo-container {
+        padding: 12px;
+    }
+    
+    /* Estilos específicos para heroes de páginas en tablets */
+    .hero-section-modern {
+        width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .hero-section-modern .hero-background-container {
+        width: 100vw !important;
+        height: 100% !important;
+    }
+    
+    .hero-section-modern .hero-image-modern {
+        width: 100vw !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+    
+    .hero-section-modern .hero-content-grid {
+        max-width: 1200px !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 2rem !important;
+    }
+    
+    .hero-section-modern .hero-title-modern {
+        font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+        gap: 0.1rem;
+        line-height: 0.85;
+    }
+    
+    .hero-section-modern .title-line-1,
+    .hero-section-modern .title-line-2 {
+        letter-spacing: 0.02em;
+        margin: 0;
+        line-height: 0.85;
+    }
+    
+    .hero-section-modern .hero-subtitle-modern {
+        font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+        text-align: center;
+        margin-top: 0.8rem;
+    }
+    
+    /* Fallback para heroes con altura específica */
+    .hero[style*="height: 50vh"] {
+        height: 45vh !important;
+        min-height: 350px;
+        width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .hero[style*="height: 50vh"] .hero-content-grid {
+        max-width: 1200px !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 2rem !important;
+    }
+    
+    .hero[style*="height: 50vh"] .hero-title-modern {
+        font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+        gap: 0.1rem;
+        line-height: 0.85;
+    }
+    
+    .hero[style*="height: 50vh"] .title-line-1,
+    .hero[style*="height: 50vh"] .title-line-2 {
+        letter-spacing: 0.02em;
+        margin: 0;
+        line-height: 0.85;
+    }
+    
+    .hero[style*="height: 50vh"] .hero-subtitle-modern {
+        font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+        margin-top: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content-grid {
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+    
+    .hero-title-modern {
+        font-size: clamp(1.5rem, 8vw, 2.5rem);
+        gap: 0.2rem;
+    }
+    
+    .title-line-1, .title-line-2, .title-line-3 {
+        font-size: 0.85em;
+        letter-spacing: 0.03em;
+    }
+    
+    .hero-subtitle-modern {
+        font-size: clamp(0.85rem, 4vw, 0.95rem);
+        line-height: 1.6;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.8rem;
+    }
+    
+    .btn-primary-modern,
+    .btn-secondary-modern {
+        width: 100%;
+        max-width: 280px;
+        padding: 0.9rem 1.5rem;
+    }
+    
+    .hero-logo-modern {
+        height: 45px;
+    }
+    
+    /* Estilos específicos para heroes de páginas en móviles */
+    .hero-section-modern .hero-content-grid {
+        gap: 1.5rem;
+        padding: 0 1rem !important;
+    }
+    
+    .hero-section-modern .hero-title-modern {
+        font-size: clamp(1.1rem, 6vw, 1.8rem);
+        line-height: 0.8;
+    }
+    
+    .hero-section-modern .hero-subtitle-modern {
+        font-size: clamp(0.75rem, 3vw, 0.85rem);
+        line-height: 1.4;
+        margin-top: 0.6rem;
+    }
+    
+    /* Fallback para heroes con altura específica */
+    .hero[style*="height: 50vh"] {
+        height: 40vh !important;
+        min-height: 280px;
+        width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .hero[style*="height: 50vh"] .hero-content-grid {
+        max-width: 1200px !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 2rem !important;
+    }
+    
+    .hero[style*="height: 50vh"] .hero-title-modern {
+        font-size: clamp(1.1rem, 6vw, 1.8rem);
+        gap: 0.05rem;
+        line-height: 0.8;
+    }
+    
+    .hero[style*="height: 50vh"] .title-line-1,
+    .hero[style*="height: 50vh"] .title-line-2 {
+        font-size: 0.75em;
+        letter-spacing: 0.015em;
+        margin: 0;
+        line-height: 0.8;
+    }
+    
+    .hero[style*="height: 50vh"] .hero-subtitle-modern {
+        font-size: clamp(0.75rem, 3vw, 0.85rem);
+        line-height: 1.4;
+        margin-top: 0.6rem;
+    }
 }
 
 .fade-in-section {
@@ -121,6 +924,56 @@ h1, h2, h3, h4, h5, h6, .font-logo {
 
 .project-filter-btn.active {
     @apply bg-gray-800 text-white border-white;
+}
+
+/* ===== ESTADÍSTICAS SIMPLES ===== */
+.stats-card {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+}
+
+.stats-number {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 700;
+    color: #8d8771;
+    margin-bottom: 0.5rem;
+}
+
+.stats-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stats-accent {
+    margin: 1rem auto 0;
+    width: 40px;
+    height: 2px;
+    background: #8d8771;
+    border-radius: 1px;
+}
+
+/* Responsive para estadísticas */
+@media (max-width: 768px) {
+    .stats-card {
+        padding: 1.5rem 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .stats-number {
+        font-size: clamp(2rem, 6vw, 2.8rem);
+    }
+    
+    .stats-label {
+        font-size: 0.8rem;
+    }
 }
 
 /* Estilos mejorados para el logo - versión circular con fondo blanco */

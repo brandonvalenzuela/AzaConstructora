@@ -1,0 +1,35 @@
+<header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex justify-between items-center">
+            <a href="#" onclick="navigateToHome()" class="flex items-center logo-enhanced">
+                <img src="../assets/images/aza-constructora.png" alt="Logo AZA Constructora" class="h-10 mr-3">
+                <span class="text-2xl font-logo font-bold tracking-wider text-white">AZA CONSTRUCTORA</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#" onclick="navigateToPage('proyectos.html')" class="text-gray-300 hover:text-white transition-colors duration-300">Proyectos</a>
+            <a href="#" onclick="navigateToPage('soluciones.html')" class="text-gray-300 hover:text-white transition-colors duration-300">Soluciones</a>
+            <a href="#" onclick="navigateToPage('nosotros.html')" class="text-gray-300 hover:text-white transition-colors duration-300">Sobre Nosotros</a>
+            <a href="#" onclick="navigateToPage('sostenibilidad.html')" class="text-gray-300 hover:text-white transition-colors duration-300">Sostenibilidad</a>
+            <a href="#" onclick="navigateToPage('contacto.html')" class="btn-accent font-semibold py-2 px-4 rounded-lg transition-colors duration-300">Contacto</a>
+            </nav>
+            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-gray-900/90 backdrop-blur-lg z-50 p-8">
+    <div class="flex justify-end mb-8">
+        <button id="close-menu-btn" class="text-white">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+    </div>
+    <nav class="flex flex-col space-y-6 text-xl">
+        <a href="#" onclick="navigateToPage('proyectos.html')" class="text-gray-300 hover:text-white transition-colors duration-300">Proyectos</a>
+            <a href="#" onclick="navigateToPage('soluciones.html')" class="text-gray-300 hover:text-white transition-colors duration-300">Soluciones</a>
+            <a href="#" onclick="navigateToPage('nosotros.html')" class="text-gray-300 hover:text-white transition-colors duration-300">Sobre Nosotros</a>
+            <a href="#" onclick="navigateToPage('sostenibilidad.html')" class="text-gray-300 hover:text-white transition-colors duration-300">Sostenibilidad</a>
+            <a href="#" onclick="navigateToPage('contacto.html')" class="btn-accent font-semibold py-2 px-4 rounded-lg transition-colors duration-300 text-center mt-4">Contacto</a>
+    </nav>
+</div>

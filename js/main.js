@@ -1,5 +1,37 @@
+// Detectar la ruta base según la ubicación del archivo
+const basePath = window.location.pathname.includes('/pages/') ? '../' : '';
+
+// Función para navegación dinámica
+function navigateToPage(pageName) {
+    const currentPath = window.location.pathname;
+    let targetPath;
+    
+    if (currentPath.includes('/pages/')) {
+        // Estamos en una página dentro de pages/, navegar a otra página usando ruta relativa
+        targetPath = `./${pageName}`;
+    } else {
+        // Estamos en la raíz, navegar a pages/
+        targetPath = `pages/${pageName}`;
+    }
+    
+    window.location.href = targetPath;
+}
+
+// Función para navegar al inicio
+function navigateToHome() {
+    const currentPath = window.location.pathname;
+    
+    if (currentPath.includes('/pages/')) {
+        // Estamos en una página dentro de pages/, ir a la raíz
+        window.location.href = '../index.html';
+    } else {
+        // Ya estamos en la raíz
+        window.location.href = 'index.html';
+    }
+}
+
 // Cargar el header dinámicamente
-fetch('header.html')
+fetch(`${basePath}components/header.html`)
     .then(response => response.text())
     .then(data => {
         document.getElementById('header-placeholder').innerHTML = data;
@@ -10,7 +42,7 @@ fetch('header.html')
     });
 
 // Cargar el footer dinámicamente
-fetch('footer.html')
+fetch(`${basePath}components/footer.html`)
     .then(response => response.text())
     .then(data => {
         document.getElementById('footer-placeholder').innerHTML = data;

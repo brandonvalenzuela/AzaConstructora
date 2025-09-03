@@ -21,8 +21,11 @@ class ContactFormLoader {
                 return false;
             }
 
+            // Detectar la ruta base según la ubicación del archivo
+            const basePath = window.location.pathname.includes('/pages/') ? './' : './pages/';
+            
             // Cargar el HTML del formulario
-            const response = await fetch('./contact-form.html');
+            const response = await fetch(`${basePath}contact-form.html`);
             if (!response.ok) {
                 throw new Error(`Error al cargar el formulario: ${response.status}`);
             }

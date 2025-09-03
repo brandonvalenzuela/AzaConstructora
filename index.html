@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <link rel="icon" href="media\aza-constructora.png" sizes="any">
     <link rel="icon" href="media\aza-constructora.png" type="image/png">
@@ -19,26 +19,70 @@
 </head>
 <body class="antialiased">
 
-    <!-- El header se cargará dinámicamente desde header.html -->
+    <!-- El header se cargará dinámicamente desde components/header.html -->
     <div id="header-placeholder"></div>
 
-    <section class="relative h-screen flex items-center justify-center text-center overflow-hidden">
-        <div class="hero-video-container">
+    <section class="relative min-h-screen flex items-center overflow-hidden hero-modern">
+        <!-- Background con múltiples capas y efectos -->
+        <div class="hero-bg-container">
+            <div class="hero-gradient-overlay"></div>
+            <div class="hero-pattern-overlay"></div>
             <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" 
-                 alt="[Imagen de maquinaria pesada en sitio de construcción, reflejando la solidez de AZA Constructora]" class="hero-video">
+                 alt="[Imagen de maquinaria pesada en sitio de construcción, reflejando la solidez de AZA Constructora]" class="hero-bg-image">
         </div>
-        <div class="relative z-10 hero-overlay w-full h-full flex flex-col items-center justify-center p-6">
-            <img src="media/aza-constructora.png" alt="Logo AZA Constructora" class="h-28 mb-12 hero-logo">
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-tight">
-                Construyendo el Futuro <br class="hidden md:block"> de México
-            </h1>
-            <p class="mt-4 text-xl md:text-2xl text-gray-300 font-light max-w-3xl">Líderes en el desarrollo de proyectos industriales y civiles con un enfoque en la innovación y la calidad.</p>
-            <a href="#proyectos" class="btn-accent font-bold py-3 px-8 rounded-lg text-lg transition-transform duration-300 hover:scale-105 mt-8">
-                Ver Proyectos Destacados
-            </a>
-            <a href="#nosotros" class="scroll-down-arrow">
-                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-            </a>
+        
+        <!-- Elementos flotantes animados -->
+        <div class="hero-floating-elements">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+            <div class="floating-shape shape-4"></div>
+        </div>
+        
+        <!-- Contenido principal con distribución horizontal -->
+        <div class="container mx-auto px-4 py-8 lg:py-16">
+            <div class="hero-content-grid">
+                <!-- Columna izquierda: Logo y título -->
+                <div class="hero-left-column">
+                    <!-- Logo con efecto glassmorphism -->
+                    
+                    <!-- Título con efectos tipográficos avanzados -->
+                    <div class="hero-title-container">
+                        <h1 class="hero-title-modern">
+                            <span class="title-line-1">CONSTRUIMOS</span>
+                            <span class="title-line-2">EL FUTURO</span>
+                            <span class="title-line-3">DE MÉXICO</span>
+                        </h1>
+                        <div class="hero-title-accent"></div>
+                    </div>
+                </div>
+                
+                <!-- Columna derecha: Subtítulo y botones -->
+                <div class="hero-right-column">
+                    <!-- Subtítulo moderno -->
+                    <p class="hero-subtitle-modern">
+                        Innovación constructiva • Proyectos industriales • Calidad excepcional
+                    </p>
+                    
+                    <!-- Botones con diseño futurista -->
+                    <div class="hero-buttons">
+                        <a href="pages/proyectos.html" class="btn-primary-modern">
+                            <span class="btn-text">Explorar Proyectos</span>
+                            <div class="btn-glow"></div>
+                        </a>
+                        <a href="pages/nosotros.html" class="btn-secondary-modern">
+                            <span class="btn-text">Conocer Más</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Indicador de scroll moderno -->
+        <div class="scroll-indicator-modern">
+            <div class="scroll-line"></div>
+            <div class="scroll-dot"></div>
+            <span class="scroll-text">SCROLL</span>
         </div>
     </section>
 
@@ -56,7 +100,7 @@
                     <p class="text-gray-300 mt-4 leading-relaxed">
                         Nuestros valores de **transparencia, profesionalismo e innovación** son la base de cada proyecto, garantizando relaciones duraderas y resultados exitosos que construyen un futuro sólido en Sonora.
                     </p>
-                    <a href="nosotros.html" class="btn-accent font-semibold py-2 px-4 rounded-lg mt-6 inline-block">Conoce Nuestro Equipo</a>
+                    <a href="pages/nosotros.html" class="btn-accent font-semibold py-2 px-4 rounded-lg mt-6 inline-block">Conoce Nuestro Equipo</a>
                 </div>
                 <div>
                     <img src="https://images.unsplash.com/photo-1654826017649-5c3742c05fca?q=80&w=1170&auto=format&fit=crop" alt="[Imagen de equipo de ingenieros revisando planos en obra]" class="rounded-lg shadow-2xl w-full h-full object-cover">
@@ -79,7 +123,7 @@
                     <span class="text-sm uppercase tracking-widest text-gray-400">Navojoa, Sonora</span>
                     <h4 class="text-3xl md:text-4xl font-bold text-white mt-2">Construcción de Nave Industrial</h4>
                     <p class="text-gray-400 mt-4">Desarrollo integral de estructura industrial, desde la cimentación hasta los acabados. Un proyecto diseñado para la máxima eficiencia operativa y seguridad.</p>
-                    <a href="proyecto-detalle.html?id=nave-industrial-navojoa" class="btn-accent font-semibold py-2 px-4 rounded-lg mt-6 inline-block">Ver Detalles del Proyecto</a>
+                    <a href="pages/proyecto-detalle?id=nave-industrial-navojoa" class="btn-accent font-semibold py-2 px-4 rounded-lg mt-6 inline-block">Ver Detalles del Proyecto</a>
                 </div>
             </div>
 
@@ -91,12 +135,12 @@
                     <span class="text-sm uppercase tracking-widest text-gray-400">Cd. Obregón, Sonora</span>
                     <h4 class="text-3xl md:text-4xl font-bold text-white mt-2">Demolición y Preparación de Sitio</h4>
                     <p class="text-gray-400 mt-4">Ejecución segura y controlada de demoliciones, preparando el terreno para nuevas construcciones bajo estrictas normas de seguridad y sostenibilidad.</p>
-                     <a href="proyecto-detalle.html?id=demolicion-obregon" class="btn-accent font-semibold py-2 px-4 rounded-lg mt-6 inline-block">Ver Detalles del Proyecto</a>
+                     <a href="pages/proyecto-detalle?id=demolicion-obregon" class="btn-accent font-semibold py-2 px-4 rounded-lg mt-6 inline-block">Ver Detalles del Proyecto</a>
                 </div>
             </div>
             
             <div class="text-center mt-12 fade-in-section">
-                <a href="proyectos.html" class="btn-accent font-bold py-3 px-8 rounded-lg text-lg transition-transform duration-300 hover:scale-105">
+                <a href="pages/proyectos.html" class="btn-accent font-bold py-3 px-8 rounded-lg text-lg transition-transform duration-300 hover:scale-105">
                     Explora Más Proyectos
                 </a>
             </div>
@@ -170,7 +214,7 @@
         </section>
     </main>
 
-    <!-- El footer se cargará dinámicamente desde footer.html -->
+    <!-- El footer se cargará dinámicamente desde components/footer.html -->
     <div id="footer-placeholder"></div>
     
     <!-- EmailJS -->

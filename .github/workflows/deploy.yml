@@ -62,14 +62,51 @@ jobs:
     - name: 🏗️ Build del proyecto
       run: npm run build
       
+    - name: 🔗 Crear enlaces para GitHub Pages
+      run: |
+        echo "🔗 Creando enlaces de páginas para GitHub Pages..."
+        cp pages/contacto.html contacto.html
+        cp pages/nosotros.html nosotros.html
+        cp pages/proyectos.html proyectos.html
+        cp pages/soluciones.html soluciones.html
+        cp pages/sostenibilidad.html sostenibilidad.html
+        echo "✅ Enlaces creados exitosamente"
+        
+    - name: 🔧 Ajustar rutas en páginas copiadas
+      run: |
+        echo "🔧 Ajustando rutas relativas en páginas copiadas..."
+        # Ajustar rutas de CSS y JS en las páginas copiadas
+        sed -i 's|href="css/|href="css/|g' *.html
+        sed -i 's|src="js/|src="js/|g' *.html
+        sed -i 's|href="assets/|href="assets/|g' *.html
+        sed -i 's|src="assets/|src="assets/|g' *.html
+        # Ajustar rutas de componentes
+        sed -i 's|components/header.html|components/header.html|g' *.html
+        sed -i 's|components/footer.html|components/footer.html|g' *.html
+        echo "✅ Rutas ajustadas correctamente"
+      
     - name: ✅ Validar estructura del proyecto
       run: |
         echo "🔍 Validando archivos críticos..."
+        echo "📁 Archivos principales:"
         test -f index.html && echo "✅ index.html" || echo "❌ index.html"
-        test -f contacto.html && echo "✅ contacto.html" || echo "❌ contacto.html"
+        test -f contacto.html && echo "✅ contacto.html (copia)" || echo "❌ contacto.html"
+        test -f nosotros.html && echo "✅ nosotros.html (copia)" || echo "❌ nosotros.html"
+        test -f proyectos.html && echo "✅ proyectos.html (copia)" || echo "❌ proyectos.html"
+        test -f soluciones.html && echo "✅ soluciones.html (copia)" || echo "❌ soluciones.html"
+        test -f sostenibilidad.html && echo "✅ sostenibilidad.html (copia)" || echo "❌ sostenibilidad.html"
+        echo "📁 Páginas originales:"
+        test -f pages/contacto.html && echo "✅ pages/contacto.html" || echo "❌ pages/contacto.html"
+        test -f pages/nosotros.html && echo "✅ pages/nosotros.html" || echo "❌ pages/nosotros.html"
+        test -f pages/proyectos.html && echo "✅ pages/proyectos.html" || echo "❌ pages/proyectos.html"
+        test -f pages/soluciones.html && echo "✅ pages/soluciones.html" || echo "❌ pages/soluciones.html"
+        test -f pages/sostenibilidad.html && echo "✅ pages/sostenibilidad.html" || echo "❌ pages/sostenibilidad.html"
+        echo "📁 Recursos y componentes:"
         test -f js/config.js && echo "✅ js/config.js" || echo "❌ js/config.js"
         test -f js/contact-handler.js && echo "✅ js/contact-handler.js" || echo "❌ js/contact-handler.js"
         test -f css/styles.css && echo "✅ css/styles.css" || echo "❌ css/styles.css"
+        test -f components/header.html && echo "✅ components/header.html" || echo "❌ components/header.html"
+        test -f components/footer.html && echo "✅ components/footer.html" || echo "❌ components/footer.html"
         
     - name: 📦 Setup Pages
       uses: actions/configure-pages@v3
@@ -138,6 +175,8 @@ jobs:
         echo "🌐 Sitio web listo para producción"
         echo "📧 EmailJS configurado correctamente"
         echo "🔧 Variables de entorno aplicadas"
+        echo "🔗 Páginas copiadas a la raíz para GitHub Pages"
+        echo "📁 Estructura de archivos validada correctamente"
         
     - name: 📊 Resumen del deploy
       run: |

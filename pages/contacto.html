@@ -13,31 +13,52 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <link rel="icon" href="media\aza-constructora.png" type="image/png">
     
     <!-- CSS externo -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body class="antialiased">
 
-    <!-- El header se cargará dinámicamente desde header.html -->
+    <!-- El header se cargará dinámicamente desde ../components/header.html -->
     <div id="header-placeholder"></div>
 
-    <section class="relative h-[50vh] flex items-center justify-center text-center overflow-hidden">
-        <div class="absolute inset-0 z-0">
+    <section class="hero-section-modern relative h-[50vh] flex items-center justify-center overflow-hidden">
+        <!-- Contenedor de fondo con efectos -->
+        <div class="hero-background-container">
             <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" 
-                 alt="Imagen de contacto" class="w-full h-full object-cover">
+                 alt="Imagen de contacto" class="hero-image-modern">
+            <div class="hero-gradient-overlay"></div>
+            <div class="hero-pattern-overlay"></div>
         </div>
-        <div class="relative z-10 hero-overlay w-full h-full flex flex-col items-center justify-center p-6">
-            <img src="media/aza-constructora.png" alt="Logo AZA Constructora" class="h-24 mb-6 hero-logo">
-            <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight">
-                Contacto
-            </h1>
-            <p class="mt-4 text-xl text-gray-300 font-light max-w-3xl">
-                Estamos listos para ayudarte con tu próximo proyecto
-            </p>
+
+        <!-- Elementos flotantes animados -->
+        <div class="floating-shape floating-shape-1"></div>
+        <div class="floating-shape floating-shape-2"></div>
+        <div class="floating-shape floating-shape-3"></div>
+
+        <!-- Contenido principal del hero -->
+        <div class="hero-content-grid">
+            <!-- Columna izquierda: Logo y título -->
+            <div class="hero-left-column">
+                <!-- Título moderno -->
+                <div class="hero-title-container">
+                    <h1 class="hero-title-modern">
+                        <span class="title-line-1">CONTACTO</span>
+                    </h1>
+                    <div class="hero-title-accent"></div>
+                </div>
+            </div>
+
+            <!-- Columna derecha: Subtítulo -->
+            <div class="hero-right-column">
+                <!-- Subtítulo moderno -->
+                <p class="hero-subtitle-modern">
+                    Estamos listos para ayudarte con tu próximo proyecto
+                </p>
+            </div>
         </div>
     </section>
 
@@ -129,23 +150,23 @@
         </section>
     </main>
 
-    <!-- El footer se cargará dinámicamente desde footer.html -->
+    <!-- El footer se cargará dinámicamente desde ../components/footer.html -->
     <div id="footer-placeholder"></div>
     
     <!-- EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     
     <!-- JavaScript externo -->
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
     
     <!-- EmailJS Configuration -->
-    <script src="js/config.js"></script>
+    <script src="../js/config.js"></script>
     
     <!-- Contact Handler -->
-    <script src="js/contact-handler.js?v=6"></script>
+    <script src="../js/contact-handler.js?v=6"></script>
     
     <!-- Contact Form Loader -->
-    <script src="js/contact-form-loader.js"></script>
+    <script src="../js/contact-form-loader.js"></script>
     
     <!-- Cargar formulario reutilizable -->
     <script>
