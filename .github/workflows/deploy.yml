@@ -5,10 +5,8 @@ name: Deploy AZA Constructora Website
 
 on:
   push:
-    #branches: [ main, master ]
     branches: [ development ]
   pull_request:
-    #branches: [ main, master ]
     branches: [ development ]
   workflow_dispatch: # Permite ejecutar manualmente
 

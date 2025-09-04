@@ -796,6 +796,9 @@ nav a {
         flex-direction: column;
         width: 100%;
         gap: 0.8rem;
+        align-items: center;
+        justify-content: center;
+        margin: 1.5rem auto 0 auto;
     }
     
     .btn-primary-modern,
@@ -803,6 +806,17 @@ nav a {
         width: 100%;
         max-width: 280px;
         padding: 0.9rem 1.5rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    
+    .hero-right-column {
+        align-items: center;
+        text-align: center;
+        width: 100%;
     }
     
     .hero-logo-modern {
