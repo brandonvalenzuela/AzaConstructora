@@ -123,12 +123,16 @@ nav a {
     height: 100%;
     object-fit: cover;
     opacity: 0;
+    visibility: hidden;
     filter: contrast(1.2) brightness(0.8);
-    transition: opacity 1.5s ease-in-out;
+    transition: opacity 1.5s ease-in-out, visibility 0s linear 1.5s;
+    z-index: 1;
 }
 
 .hero-bg-image.active {
     opacity: 0.3;
+    visibility: visible;
+    transition: opacity 1.5s ease-in-out, visibility 0s linear 0s;
 }
 
 /* Gradiente dinámico superpuesto */
@@ -232,7 +236,7 @@ nav a {
     gap: 3rem;
     align-items: center;
     min-height: 80vh;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     width: 100%;
     padding: 0 2rem;
@@ -726,7 +730,7 @@ nav a {
     }
     
     .hero-section-modern .hero-content-grid {
-        max-width: 1400px !important;
+        max-width: 1200px !important;
         width: 100% !important;
         margin: 0 auto !important;
         padding: 0 2rem !important;
@@ -761,7 +765,7 @@ nav a {
     }
     
     .hero[style*="height: 50vh"] .hero-content-grid {
-        max-width: 1400px !important;
+        max-width: 1200px !important;
         width: 100% !important;
         margin: 0 auto !important;
         padding: 0 2rem !important;
@@ -811,8 +815,8 @@ nav a {
         flex-direction: column;
         width: 100%;
         gap: 0.8rem;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
     }
     
     .btn-primary-modern,
@@ -820,6 +824,10 @@ nav a {
         width: 100%;
         max-width: 280px;
         padding: 0.9rem 1.5rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .hero-logo-modern {
@@ -853,7 +861,7 @@ nav a {
     }
     
     .hero[style*="height: 50vh"] .hero-content-grid {
-        max-width: 1400px !important;
+        max-width: 1200px !important;
         width: 100% !important;
         margin: 0 auto !important;
         padding: 0 2rem !important;
@@ -965,42 +973,6 @@ nav a {
     @apply bg-gray-800 text-white border-white;
 }
 
-/* Efecto hover minimalista para las cards de proyectos */
-.project-card {
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.project-card:hover {
-    transform: translateY(-8px);
-}
-
-.project-card .group {
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border: 1px solid transparent;
-}
-
-.project-card:hover .group {
-    transform: none !important;
-    border-color: rgba(141, 135, 113, 0.3);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.project-card .group img {
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.project-card:hover .group img {
-    transform: scale(1.02) !important;
-}
-
-.project-card .group .absolute.inset-0 {
-    transition: opacity 0.4s ease;
-}
-
-.project-card:hover .group .absolute.inset-0 {
-    opacity: 0.7 !important;
-}
-
 /* ===== ESTADÍSTICAS SIMPLES ===== */
 .stats-card {
     text-align: center;
@@ -1051,27 +1023,6 @@ nav a {
     }
 }
 
-/* Sobrescribir limitaciones de ancho de Tailwind para pantallas grandes */
-@media (min-width: 1280px) {
-    .container {
-        max-width: 1400px !important;
-    }
-    
-    main.container {
-        max-width: 1400px !important;
-    }
-}
-
-@media (min-width: 1536px) {
-    .container {
-        max-width: 1600px !important;
-    }
-    
-    main.container {
-        max-width: 1600px !important;
-    }
-}
-
 /* Estilos mejorados para el logo - versión circular con fondo blanco */
 .hero-logo {
     background: rgba(255, 255, 255, 0.9);
@@ -1108,28 +1059,4 @@ footer img[alt="Logo AZA Constructora"] {
     border-radius: 50%;
     padding: 8px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* Sobrescribir limitaciones de ancho de Tailwind para pantallas grandes */
-@media (min-width: 1280px) {
-    .container {
-        max-width: 1400px !important;
-    }
-}
-
-@media (min-width: 1536px) {
-    .container {
-        max-width: 1600px !important;
-    }
-}
-
-/* Asegurar que el contenido principal use mejor el espacio disponible */
-main.container {
-    max-width: 1400px;
-}
-
-@media (min-width: 1536px) {
-    main.container {
-        max-width: 1600px;
-    }
 }

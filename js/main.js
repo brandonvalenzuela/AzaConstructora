@@ -115,6 +115,9 @@ function initHeroCarousel() {
     
     let currentIndex = 0;
     
+    // Mostrar la primera imagen al cargar
+    images[currentIndex].classList.add('active');
+    
     function showNextImage() {
         // Remover clase active de la imagen actual
         images[currentIndex].classList.remove('active');
