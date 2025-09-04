@@ -108,7 +108,44 @@ function setupHeaderScrollEffect() {
     }
 }
 
+// Función para inicializar el carrusel del hero
+function initHeroCarousel() {
+    const images = document.querySelectorAll('.hero-bg-image');
+    let currentIndex = 0;
+    
+    // Asegurar que solo la primera imagen esté activa al cargar
+    if (images.length > 0) {
+        images.forEach((img, index) => {
+            if (index === 0) {
+                img.classList.add('active');
+            } else {
+                img.classList.remove('active');
+            }
+        });
+    }
+    
+    function showNextImage() {
+        if (images.length <= 1) return;
+        
+        // Remover clase active de la imagen actual
+        images[currentIndex].classList.remove('active');
+        
+        // Incrementar índice
+        currentIndex = (currentIndex + 1) % images.length;
+        
+        // Agregar clase active a la nueva imagen
+        images[currentIndex].classList.add('active');
+    }
+    
+    // Cambiar imagen cada 4 segundos
+    if (images.length > 1) {
+        setInterval(showNextImage, 4000);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Inicializar carrusel del hero
+    initHeroCarousel();
 
     // Animación "fade-in-section" al hacer scroll
     const sections = document.querySelectorAll('.fade-in-section');
