@@ -108,7 +108,31 @@ function setupHeaderScrollEffect() {
     }
 }
 
+// Función para el carrusel de imágenes del hero
+function initHeroCarousel() {
+    const images = document.querySelectorAll('.hero-bg-image');
+    if (images.length === 0) return;
+    
+    let currentIndex = 0;
+    
+    function showNextImage() {
+        // Remover clase active de la imagen actual
+        images[currentIndex].classList.remove('active');
+        
+        // Incrementar índice (volver al inicio si llegamos al final)
+        currentIndex = (currentIndex + 1) % images.length;
+        
+        // Agregar clase active a la nueva imagen
+        images[currentIndex].classList.add('active');
+    }
+    
+    // Cambiar imagen cada 5 segundos
+    setInterval(showNextImage, 4000);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Inicializar carrusel del hero
+    initHeroCarousel();
 
     // Animación "fade-in-section" al hacer scroll
     const sections = document.querySelectorAll('.fade-in-section');
