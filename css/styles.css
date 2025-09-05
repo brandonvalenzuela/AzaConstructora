@@ -784,6 +784,7 @@ nav a {
     .hero-content-grid {
         gap: 1.5rem;
         padding: 1rem;
+        text-align: center;
     }
     
     .hero-title-modern {
@@ -799,6 +800,7 @@ nav a {
     .hero-subtitle-modern {
         font-size: clamp(0.85rem, 4vw, 0.95rem);
         line-height: 1.6;
+        text-align: center;
     }
     
     .hero-buttons {
@@ -808,6 +810,7 @@ nav a {
         align-items: center;
         justify-content: center;
         margin: 1.5rem auto 0 auto;
+        text-align: center;
     }
     
     .btn-primary-modern,
@@ -823,6 +826,15 @@ nav a {
     }
     
     .hero-right-column {
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .hero-left-column {
         align-items: center;
         text-align: center;
         width: 100%;
