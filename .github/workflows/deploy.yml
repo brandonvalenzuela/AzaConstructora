@@ -5,9 +5,9 @@ name: Deploy AZA Constructora Website
 
 on:
   push:
-    branches: [ "development" ]
+    branches: [ development ]
   pull_request:
-    branches: [ "development" ]
+    branches: [ development ]
   workflow_dispatch: # Permite ejecutar manualmente
 
 # Permisos necesarios para GitHub Pages
@@ -124,7 +124,7 @@ jobs:
     - name: 🚀 Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
-      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/development' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         
     # Ejemplo de deploy a diferentes proveedores
     # Descomenta y configura según tu proveedor
