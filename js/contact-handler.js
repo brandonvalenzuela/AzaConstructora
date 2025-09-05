@@ -4,18 +4,24 @@
  */
 class ContactHandler {
     constructor() {
+        // Inicializar Set de formularios siempre
+        this.initializedForms = new Set();
+        
         // Configuracion de EmailJS desde config.js
         const env = window.APP_CONFIG?.emailjs;
         if (!env) {
-            console.error('⚠️ Configuración de EmailJS no encontrada. Asegúrate de incluir config.js');
+            console.warn('⚠️ Configuración de EmailJS no encontrada. Asegúrate de incluir config.js');
+            // Continuar sin EmailJS para evitar errores
+            this.serviceId = null;
+            this.templateId = null;
+            this.publicKey = null;
             return;
         }
         
         this.serviceId = env.serviceId || env.EMAILJS_SERVICE_ID;
         this.templateId = env.templateId || env.EMAILJS_TEMPLATE_ID;
         this.publicKey = env.publicKey || env.EMAILJS_PUBLIC_KEY;
-        this.initializedForms = new Set();
-        this.init();
+        this.init(); 
     }
 
     // Método estático para inicializar formularios específicos
