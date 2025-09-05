@@ -310,6 +310,15 @@ nav a {
     padding-left: 2rem;
 }
 
+/* Centrado específico para móviles */
+@media (max-width: 768px) {
+    .hero-right-column {
+        align-items: center;
+        padding-left: 0;
+        text-align: center;
+    }
+}
+
 /* Logo moderno con glassmorphism */
 .hero-logo-container {
     position: relative;
@@ -811,6 +820,7 @@ nav a {
         justify-content: center;
         margin: 1.5rem auto 0 auto;
         text-align: center;
+        display: flex !important;
     }
     
     .btn-primary-modern,
