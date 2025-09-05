@@ -5,9 +5,9 @@ name: Deploy AZA Constructora Website
 
 on:
   push:
-    branches: [ development ]
+    branches: [ "development" ]
   pull_request:
-    branches: [ development ]
+    branches: [ "development" ]
   workflow_dispatch: # Permite ejecutar manualmente
 
 # Permisos necesarios para GitHub Pages
