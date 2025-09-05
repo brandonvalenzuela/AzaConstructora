@@ -284,37 +284,3 @@ function renderProjects(projects, containerId) {
     const projectsHTML = projects.map(project => createProjectCard(project)).join('');
     container.innerHTML = projectsHTML;
 }
-
-// Datos de ejemplo para proyectos
-const projectsData = [
-    {
-        category: 'obra-civil',
-        imageUrl: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1170&auto=format&fit=crop',
-        imageAlt: 'Construcción de carretera',
-        categoryLabel: 'Obra Civil',
-        title: 'Construcción de Carretera Estatal',
-        description: 'Proyecto de pavimentación y construcción de 15 km de carretera estatal, incluyendo señalización y sistemas de drenaje.',
-        location: 'Hermosillo, Sonora',
-        year: '2023'
-    },
-    {
-        category: 'edificacion',
-        imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1170&auto=format&fit=crop',
-        imageAlt: 'Edificio comercial',
-        categoryLabel: 'Edificación',
-        title: 'Centro Comercial Plaza Norte',
-        description: 'Construcción de centro comercial de 3 niveles con 50 locales comerciales y estacionamiento subterráneo.',
-        location: 'Tijuana, Baja California',
-        year: '2024'
-    },
-    {
-        category: 'infraestructura',
-        imageUrl: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1170&auto=format&fit=crop',
-        imageAlt: 'Puente vehicular',
-        categoryLabel: 'Infraestructura',
-        title: 'Puente Vehicular Los Pinos',
-        description: 'Construcción de puente vehicular de 200 metros de longitud sobre río principal de la ciudad.',
-        location: 'Guadalajara, Jalisco',
-        year: '2023'
-    }
-];

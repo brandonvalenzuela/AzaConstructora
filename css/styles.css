@@ -794,6 +794,8 @@ nav a {
         gap: 1.5rem;
         padding: 1rem;
         text-align: center;
+        display: grid !important;
+        place-items: center;
     }
     
     .hero-title-modern {
@@ -836,18 +838,36 @@ nav a {
     }
     
     .hero-right-column {
-        align-items: center;
-        text-align: center;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        margin: 0 auto !important;
     }
     
     .hero-left-column {
-        align-items: center;
-        text-align: center;
-        width: 100%;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        margin: 0 auto !important;
+    }
+    
+    /* Forzar centrado completo en móvil */
+    .hero-modern .hero-content-grid {
+        text-align: center !important;
+        justify-items: center !important;
+        align-items: center !important;
+    }
+    
+    .hero-modern .hero-buttons {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        justify-self: center !important;
     }
     
     .hero-logo-modern {
