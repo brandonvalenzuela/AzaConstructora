@@ -138,12 +138,25 @@
     <div id="footer-placeholder"></div>
     
     <!-- JavaScript externo -->
+    <script src="../js/site-config.js"></script>
+    <script src="../js/supabase-client.js"></script>
+    <script src="../supabase/config.js"></script>
+    <script src="../supabase/init.js"></script>
     <script src="../js/projects.js"></script>
     <script src="../js/main.js"></script>
     <script>
         // Inicializar el sistema de proyectos cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
-            initializeProjects();
+            // Inicializar Supabase primero
+            if (typeof window.supabaseClient === 'undefined') {
+                window.supabaseClient = new SupabaseClient();
+                console.log('🔄 Inicializando Supabase para proyectos...');
+            }
+            
+            // Luego inicializar proyectos
+            setTimeout(() => {
+                initializeProjects();
+            }, 500); // Pequeño retraso para asegurar que Supabase esté listo
         });
     </script>
 
