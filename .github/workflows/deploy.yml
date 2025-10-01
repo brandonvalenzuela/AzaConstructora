@@ -52,8 +52,12 @@ jobs:
       run: |
         echo "📁 Contenido de js/:"
         ls -la js/
-        echo "📄 Contenido de config.js:"
+        echo "📄 Contenido de js/config.js:"
         cat js/config.js | head -20  # Mostrar solo las primeras 20 líneas por seguridad
+        echo "\n📁 Contenido de supabase/:"
+        ls -la supabase/
+        echo "📄 Contenido de supabase/config.js:"
+        cat supabase/config.js | head -20  # Mostrar solo las primeras 20 líneas por seguridad
         echo "\n✅ Archivos críticos:"
         ls -la *.html css/ assets/ || true
         
@@ -107,6 +111,7 @@ jobs:
         test -f pages/sostenibilidad.html && echo "✅ pages/sostenibilidad.html" || echo "❌ pages/sostenibilidad.html"
         echo "📁 Recursos y componentes:"
         test -f js/config.js && echo "✅ js/config.js" || echo "❌ js/config.js"
+        test -f supabase/config.js && echo "✅ supabase/config.js" || echo "❌ supabase/config.js"
         test -f js/contact-handler.js && echo "✅ js/contact-handler.js" || echo "❌ js/contact-handler.js"
         test -f js/supabase-client.js && echo "✅ js/supabase-client.js" || echo "❌ js/supabase-client.js"
         test -f js/site-config.js && echo "✅ js/site-config.js" || echo "❌ js/site-config.js"

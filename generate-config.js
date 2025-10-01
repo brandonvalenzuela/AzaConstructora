@@ -19,11 +19,17 @@ const configContent = `// Configuración generada automáticamente desde variabl
 // NO EDITAR MANUALMENTE - Este archivo se regenera automáticamente
 window.APP_CONFIG = ${JSON.stringify(config, null, 4)};`;
 
+// Generar config.js en js/
 const configPath = path.join(__dirname, 'js', 'config.js');
-
 fs.writeFileSync(configPath, configContent, 'utf8');
-console.log('✅ Archivo config.js generado exitosamente');
+console.log('✅ Archivo js/config.js generado exitosamente');
 console.log('📍 Ubicación:', configPath);
+
+// Generar config.js en supabase/
+const supabaseConfigPath = path.join(__dirname, 'supabase', 'config.js');
+fs.writeFileSync(supabaseConfigPath, configContent, 'utf8');
+console.log('✅ Archivo supabase/config.js generado exitosamente');
+console.log('📍 Ubicación:', supabaseConfigPath);
 
 // Verificar si las variables se cargaron correctamente
 const emailjsVars = Object.keys(config.emailjs);

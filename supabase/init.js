@@ -116,11 +116,12 @@ class SupabaseInitializer {
         this.log('🔍 Verificando dependencias...');
         
         const dependencies = {
-            'Supabase Client': () => typeof window.supabase !== 'undefined' || typeof window.supabaseClient !== 'undefined'
+            'Supabase Client': () => typeof window.supabase !== 'undefined',
+            'Supabase Manager': () => typeof window.SupabaseManager !== 'undefined',
+            'Site Config Manager': () => typeof window.SiteConfigManager !== 'undefined'
         };
         
         const missing = [];
-        const optional = [];
         
         for (const [name, check] of Object.entries(dependencies)) {
             if (!check()) {
@@ -128,20 +129,11 @@ class SupabaseInitializer {
             }
         }
         
-        // Verificar dependencias opcionales
-        if (typeof window.SiteConfigManager === 'undefined') {
-            optional.push('Site Config Manager');
-        }
-        
         if (missing.length > 0) {
             throw new Error(`Dependencias faltantes: ${missing.join(', ')}`);
         }
         
-        if (optional.length > 0) {
-            this.log(`ℹ️ Dependencias opcionales no disponibles: ${optional.join(', ')}`);
-        }
-        
-        this.log('✅ Todas las dependencias requeridas están disponibles');
+        this.log('✅ Todas las dependencias están disponibles');
     }
     
     /**
@@ -151,27 +143,33 @@ class SupabaseInitializer {
         this.log('🔌 Inicializando cliente Supabase...');
         
         try {
-            // Verificar si el cliente Supabase ya está disponible
-            if (window.supabaseClient) {
-                this.components.set('supabaseClient', window.supabaseClient);
-                this.initStatus.supabase = true;
-                this.log('✅ Cliente Supabase ya inicializado');
-                
-                // Verificar conexión
-                if (window.supabaseClient.isConnected) {
-                    this.initStatus.manager = true;
-                    this.log('✅ Supabase conectado y listo');
-                } else {
-                    this.log('ℹ️ Supabase en modo offline');
-                }
-            } else {
-                this.log('⚠️ Cliente Supabase no disponible, continuando sin él');
+            // Verificar credenciales
+            const credentials = window.SupabaseUtils?.checkCredentials();
+            
+            if (!credentials?.ready) {
+                throw new Error('Credenciales de Supabase no configuradas');
             }
+            
+            // Inicializar SupabaseManager
+            if (window.initializeSupabase) {
+                this.components.set('supabaseManager', await window.initializeSupabase({
+                    development: this.config.development
+                }));
+                
+                this.initStatus.manager = true;
+                this.log('✅ SupabaseManager inicializado');
+            }
+            
+            // Inicializar cliente básico si no existe
+            if (!window.supabaseClient && window.createSupabaseClient) {
+                await window.createSupabaseClient();
+            }
+            
+            this.initStatus.supabase = true;
             
         } catch (error) {
             this.error('Error inicializando Supabase:', error);
-            // No lanzar error, permitir continuar sin Supabase
-            this.log('⚠️ Continuando sin Supabase');
+            throw error;
         }
     }
     
@@ -228,22 +226,13 @@ class SupabaseInitializer {
      */
     async initializeSiteConfig() {
         if (window.SiteConfigManager) {
-            // Usar instancia existente si ya está disponible
-            if (window.siteConfig) {
-                this.components.set('siteConfig', window.siteConfig);
-                this.initStatus.siteConfig = true;
-                this.log('✅ Usando SiteConfigManager existente');
-            } else {
-                const siteConfig = new window.SiteConfigManager();
-                await siteConfig.loadFromSupabase();
-                this.initStatus.siteConfig = true;
-                this.components.set('siteConfig', siteConfig);
-                
-                // Exponer globalmente
-                window.siteConfigManager = siteConfig;
-            }
-        } else {
-            this.log('ℹ️ SiteConfigManager no disponible');
+            const siteConfig = new window.SiteConfigManager();
+            await siteConfig.loadFromSupabase();
+            this.initStatus.siteConfig = true;
+            this.components.set('siteConfig', siteConfig);
+            
+            // Exponer globalmente
+            window.siteConfigManager = siteConfig;
         }
     }
     
@@ -276,13 +265,14 @@ class SupabaseInitializer {
         
         const verifications = {
             'Conexión Supabase': () => {
-                return window.supabaseClient?.isConnected || false;
+                const manager = this.components.get('supabaseManager');
+                return manager?.isConnected || window.supabaseClient?.isConnected;
             },
             'Proyectos': () => {
-                return window.projectManager?.projects?.length > 0 || false;
+                return window.projectManager?.projects?.length > 0;
             },
             'Configuración': () => {
-                return window.siteConfig?.loaded || window.siteConfigManager?.loaded || false;
+                return window.siteConfigManager?.loaded;
             }
         };
         

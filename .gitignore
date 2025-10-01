@@ -44,5 +44,6 @@ EMAILJS-TEMPLATE-*.md
 email-templates/
 templates/email/
 
-# Configuración de EmailJS
-config.js
+# Configuración de EmailJS y Supabase (generados automáticamente)
+js/config.js
+supabase/config.js
