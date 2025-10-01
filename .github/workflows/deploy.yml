@@ -71,6 +71,7 @@ jobs:
         cp pages/contacto.html contacto.html
         cp pages/nosotros.html nosotros.html
         cp pages/proyectos.html proyectos.html
+        cp pages/proyecto-detalle.html proyecto-detalle.html
         cp pages/soluciones.html soluciones.html
         cp pages/sostenibilidad.html sostenibilidad.html
         echo "✅ Enlaces creados exitosamente"
@@ -101,12 +102,14 @@ jobs:
         test -f contacto.html && echo "✅ contacto.html (copia)" || echo "❌ contacto.html"
         test -f nosotros.html && echo "✅ nosotros.html (copia)" || echo "❌ nosotros.html"
         test -f proyectos.html && echo "✅ proyectos.html (copia)" || echo "❌ proyectos.html"
+        test -f proyecto-detalle.html && echo "✅ proyecto-detalle.html (copia)" || echo "❌ proyecto-detalle.html"
         test -f soluciones.html && echo "✅ soluciones.html (copia)" || echo "❌ soluciones.html"
         test -f sostenibilidad.html && echo "✅ sostenibilidad.html (copia)" || echo "❌ sostenibilidad.html"
         echo "📁 Páginas originales:"
         test -f pages/contacto.html && echo "✅ pages/contacto.html" || echo "❌ pages/contacto.html"
         test -f pages/nosotros.html && echo "✅ pages/nosotros.html" || echo "❌ pages/nosotros.html"
         test -f pages/proyectos.html && echo "✅ pages/proyectos.html" || echo "❌ pages/proyectos.html"
+        test -f pages/proyecto-detalle.html && echo "✅ pages/proyecto-detalle.html" || echo "❌ pages/proyecto-detalle.html"
         test -f pages/soluciones.html && echo "✅ pages/soluciones.html" || echo "❌ pages/soluciones.html"
         test -f pages/sostenibilidad.html && echo "✅ pages/sostenibilidad.html" || echo "❌ pages/sostenibilidad.html"
         echo "📁 Recursos y componentes:"
