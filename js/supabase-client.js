@@ -3,11 +3,6 @@
  * Cliente ligero para integración con Supabase como BaaS
  */
 
-// Detectar entorno de desarrollo
-const isDevelopment = window.location.hostname === 'localhost' || 
-                      window.location.hostname === '127.0.0.1' || 
-                      window.location.hostname.includes('192.168.');
-
 class SupabaseClient {
     constructor() {
         // Configuración desde variables de entorno o config.js
@@ -15,10 +10,10 @@ class SupabaseClient {
         
         this.supabaseUrl = config.url || null;
         this.supabaseKey = config.key || null;
-        this.isDev = isDevelopment;
+        this.showLogs = window.showLogs || false; // Usar variable global de utils.js
         
         if (!this.supabaseUrl || !this.supabaseKey) {
-            if (this.isDev) console.warn('⚠️ Configuración de Supabase no encontrada. Funcionando en modo offline.');
+            if (this.showLogs) console.warn('⚠️ Configuración de Supabase no encontrada. Funcionando en modo offline.');
             this.client = null;
             this.isConnected = false;
             return;
@@ -28,7 +23,7 @@ class SupabaseClient {
             // Importar Supabase dinámicamente
             this.initializeClient();
         } catch (error) {
-            if (this.isDev) console.error('Error inicializando Supabase:', error);
+            if (this.showLogs) console.error('Error inicializando Supabase:', error);
             this.client = null;
             this.isConnected = false;
         }
@@ -46,13 +41,13 @@ class SupabaseClient {
             }
             
             this.isConnected = true;
-            if (this.isDev) console.log('✅ Supabase cliente inicializado correctamente');
+            if (this.showLogs) console.log('✅ Supabase cliente inicializado correctamente');
             
             // Verificar conexión
             await this.testConnection();
             
         } catch (error) {
-            if (this.isDev) console.error('Error conectando con Supabase:', error);
+            if (this.showLogs) console.error('Error conectando con Supabase:', error);
             this.client = null;
             this.isConnected = false;
         }
@@ -85,10 +80,10 @@ class SupabaseClient {
                 throw error;
             }
             
-            if (this.isDev) console.log('✅ Conexión con Supabase verificada');
+            if (this.showLogs) console.log('✅ Conexión con Supabase verificada');
             return true;
         } catch (error) {
-            if (this.isDev) console.warn('⚠️ Error verificando conexión:', error.message);
+            if (this.showLogs) console.warn('⚠️ Error verificando conexión:', error.message);
             return false;
         }
     }
@@ -118,11 +113,11 @@ class SupabaseClient {
             
             if (error) throw error;
             
-            if (this.isDev) console.log('✅ Contacto guardado en Supabase:', data[0]);
+            if (this.showLogs) console.log('✅ Contacto guardado en Supabase:', data[0]);
             return { success: true, data: data[0] };
             
         } catch (error) {
-            if (this.isDev) console.error('❌ Error guardando contacto:', error);
+            if (this.showLogs) console.error('❌ Error guardando contacto:', error);
             return { success: false, error: error.message };
         }
     }
@@ -159,7 +154,7 @@ class SupabaseClient {
             return { success: true, data };
             
         } catch (error) {
-            if (this.isDev) console.error('❌ Error obteniendo contactos:', error);
+            if (this.showLogs) console.error('❌ Error obteniendo contactos:', error);
             return { success: false, error: error.message };
         }
     }
@@ -188,11 +183,11 @@ class SupabaseClient {
             
             if (error) throw error;
             
-            if (this.isDev) console.log('✅ Proyecto guardado en Supabase:', data[0]);
+            if (this.showLogs) console.log('✅ Proyecto guardado en Supabase:', data[0]);
             return { success: true, data: data[0] };
             
         } catch (error) {
-            if (this.isDev) console.error('❌ Error guardando proyecto:', error);
+            if (this.showLogs) console.error('❌ Error guardando proyecto:', error);
             return { success: false, error: error.message };
         }
     }
@@ -229,7 +224,7 @@ class SupabaseClient {
             return { success: true, data };
             
         } catch (error) {
-            if (this.isDev) console.error('❌ Error obteniendo proyectos:', error);
+            if (this.showLogs) console.error('❌ Error obteniendo proyectos:', error);
             return { success: false, error: error.message };
         }
     }
@@ -255,11 +250,11 @@ class SupabaseClient {
             
             if (error) throw error;
             
-            if (this.isDev) console.log('✅ Configuración actualizada:', data[0]);
+            if (this.showLogs) console.log('✅ Configuración actualizada:', data[0]);
             return { success: true, data: data[0] };
             
         } catch (error) {
-            if (this.isDev) console.error('❌ Error actualizando configuración:', error);
+            if (this.showLogs) console.error('❌ Error actualizando configuración:', error);
             return { success: false, error: error.message };
         }
     }
@@ -286,7 +281,7 @@ class SupabaseClient {
             return { success: true, data };
             
         } catch (error) {
-            if (this.isDev) console.error('❌ Error obteniendo configuración:', error);
+            if (this.showLogs) console.error('❌ Error obteniendo configuración:', error);
             return { success: false, error: error.message };
         }
     }
@@ -312,7 +307,7 @@ class SupabaseClient {
             return { success: true, data: stats };
             
         } catch (error) {
-            if (this.isDev) console.error('❌ Error obteniendo estadísticas:', error);
+            if (this.showLogs) console.error('❌ Error obteniendo estadísticas:', error);
             return { success: false, error: error.message };
         }
     }

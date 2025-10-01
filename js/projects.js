@@ -1,8 +1,3 @@
-// Detectar entorno de desarrollo
-const isDev = window.location.hostname === 'localhost' || 
-              window.location.hostname === '127.0.0.1' || 
-              window.location.hostname.includes('192.168.');
-
 // Sistema de gestión de proyectos dinámico con Supabase
 class ProjectManager {
     constructor() {
@@ -10,9 +5,8 @@ class ProjectManager {
         this.currentFilter = 'all';
         this.supabaseClient = window.supabaseClient;
         this.supabaseEnabled = this.supabaseClient && this.supabaseClient.isConnected;
-        this.isDev = isDev;
         
-        if (this.isDev) {
+        if (window.showLogs) {
             console.log('🔧 ProjectManager inicializado:');
             console.log('  - Supabase:', this.supabaseEnabled ? '✅ Conectado' : '❌ No disponible');
         }
@@ -31,7 +25,7 @@ class ProjectManager {
     // Cargar proyectos desde Supabase
     async loadProjectsFromSupabase(filters = {}) {
         if (!this.supabaseEnabled) {
-            if (this.isDev) console.warn('⚠️ Supabase no disponible, usando proyectos por defecto');
+            if (window.showLogs) console.warn('⚠️ Supabase no disponible, usando proyectos por defecto');
             return { success: false, error: 'Supabase no conectado' };
         }
         
@@ -45,14 +39,14 @@ class ProjectManager {
                 // Reemplazar proyectos actuales con los de Supabase
                 this.projects = supabaseProjects;
                 
-                if (this.isDev) console.log(`✅ ${supabaseProjects.length} proyectos cargados desde Supabase`);
+                if (window.showLogs) console.log(`✅ ${supabaseProjects.length} proyectos cargados desde Supabase`);
                 return { success: true, data: supabaseProjects };
             } else {
-                if (this.isDev) console.warn('⚠️ No se pudieron cargar proyectos desde Supabase:', result.error);
+                if (window.showLogs) console.warn('⚠️ No se pudieron cargar proyectos desde Supabase:', result.error);
                 return { success: false, error: result.error };
             }
         } catch (error) {
-            if (this.isDev) console.error('❌ Error cargando proyectos desde Supabase:', error);
+            if (window.showLogs) console.error('❌ Error cargando proyectos desde Supabase:', error);
             return { success: false, error: error.message };
         }
     }
@@ -174,14 +168,14 @@ class ProjectManager {
             const result = await this.supabaseClient.insertProject(supabaseData);
             
             if (result.success) {
-                if (this.isDev) console.log('✅ Proyecto guardado en Supabase:', result.data.id);
+                if (window.showLogs) console.log('✅ Proyecto guardado en Supabase:', result.data.id);
                 // Agregar a la lista local
                 this.addProject(projectData);
             }
             
             return result;
         } catch (error) {
-            if (this.isDev) console.error('❌ Error guardando proyecto:', error);
+            if (window.showLogs) console.error('❌ Error guardando proyecto:', error);
             return { success: false, error: error.message };
         }
     }
