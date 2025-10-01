@@ -347,28 +347,40 @@ function openImageModal(imageUrl, imageAlt) {
 // Instancia global del manager
 const projectDetailManager = new ProjectDetailManager();
 
-// Función de inicialización
-function initializeProjectDetail() {
+// Función de inicialización con re intentos
+async function initializeProjectDetail() {
     // Verificar si tenemos acceso a los proyectos desde projects.js
     if (typeof projectManager !== 'undefined' && projectManager.projects && projectManager.projects.length > 0) {
         console.log('Proyectos encontrados:', projectManager.projects.length);
         projectDetailManager.initialize(projectManager.projects);
-    } else if (typeof projectManager !== 'undefined') {
+        return;
+    }
+    
+    if (typeof projectManager !== 'undefined') {
         // Si projectManager existe pero no tiene proyectos, inicializar proyectos primero
         console.log('ProjectManager existe pero sin proyectos, inicializando...');
+        
         if (typeof initializeProjects === 'function') {
-            initializeProjects();
+            await initializeProjects();
         }
-        // Esperar un momento para que se carguen los proyectos
-        setTimeout(() => {
+        
+        // Esperar con re intentos para que se carguen los proyectos desde Supabase
+        const maxRetries = 10; // Máximo 10 intentos
+        const retryDelay = 300; // 300ms entre intentos
+        
+        for (let i = 0; i < maxRetries; i++) {
+            await new Promise(resolve => setTimeout(resolve, retryDelay));
+            
             if (projectManager.projects && projectManager.projects.length > 0) {
-                console.log('Proyectos cargados después de inicialización:', projectManager.projects.length);
+                console.log(`Proyectos cargados después de ${(i + 1) * retryDelay}ms:`, projectManager.projects.length);
                 projectDetailManager.initialize(projectManager.projects);
-            } else {
-                console.error('No se pudieron cargar los proyectos');
-                projectDetailManager.showError();
+                return;
             }
-        }, 100);
+        }
+        
+        // Si después de todos los re intentos no hay proyectos
+        console.error('No se pudieron cargar los proyectos después de esperar');
+        projectDetailManager.showError();
     } else {
         console.error('ProjectManager no está disponible');
         projectDetailManager.showError();
