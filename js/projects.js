@@ -1,4 +1,3 @@
-// Sistema de gestión de proyectos dinámico con Supabase
 class ProjectManager {
     constructor() {
         this.projects = [];
@@ -6,8 +5,9 @@ class ProjectManager {
         this.supabaseClient = window.supabaseClient;
         this.supabaseEnabled = this.supabaseClient && this.supabaseClient.isConnected;
         
-        console.log('🔧 ProjectManager inicializado:');
-        console.log('  - Supabase:', this.supabaseEnabled ? '✅ Conectado' : '❌ No disponible');
+        const mode = this.supabaseEnabled ? 'Supabase' : 'GitHub Pages (modo offline)';
+        console.log(`🔧 ProjectManager inicializado en ${mode}:`);
+        console.log('  - Supabase:', this.supabaseEnabled ? '✅ Disponible' : '❌ No disponible');
     }
 
     // Agregar un proyecto

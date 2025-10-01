@@ -72,32 +72,9 @@ class SiteConfigManager {
     
     // Inicializar SupabaseManager
     initializeSupabaseManager() {
-        if (this.supabaseEnabled && window.SupabaseManager) {
-            try {
-                this.supabaseManager = new window.SupabaseManager(
-                    null, null, // Se inicializará automáticamente
-                    {
-                        cache: {
-                            enabled: true,
-                            duration: this.defaultConfig.supabase_cache_duracion
-                        },
-                        connection: {
-                            timeout: this.defaultConfig.supabase_timeout,
-                            retries: this.defaultConfig.supabase_reintentos
-                        }
-                    }
-                );
-                
-                // Inicializar con credenciales existentes
-                if (this.supabaseClient && this.supabaseClient.supabase) {
-                    this.supabaseManager.supabase = this.supabaseClient.supabase;
-                    this.supabaseManager.isConnected = true;
-                }
-                
-                console.log('✅ SupabaseManager inicializado para configuración');
-            } catch (error) {
-                console.warn('⚠️ Error inicializando SupabaseManager:', error);
-            }
+        // SupabaseManager es opcional, usar supabaseClient directamente
+        if (this.supabaseEnabled) {
+            console.log('✅ Usando SupabaseClient para configuración');
         }
     }
     
@@ -132,19 +109,8 @@ class SiteConfigManager {
         }
         
         try {
-            let result;
-            
-            // Usar SupabaseManager si está disponible
-            if (this.supabaseManager) {
-                const configs = await this.supabaseManager.getSiteConfig();
-                result = {
-                    success: true,
-                    data: Array.isArray(configs) ? configs : (configs ? [configs] : [])
-                };
-            } else {
-                // Fallback al método original
-                result = await this.supabaseClient.getSiteConfig();
-            }
+            // Usar supabaseClient directamente
+            const result = await this.supabaseClient.getSiteConfig();
             
             if (result.success && result.data) {
                 // Si es un array (todas las configuraciones)
@@ -168,7 +134,7 @@ class SiteConfigManager {
                 this.loaded = true;
                 
                 // Si no hay configuraciones, crear las básicas
-                if (result.data.length === 0) {
+                if (Array.isArray(result.data) && result.data.length === 0) {
                     await this.createDefaultSupabaseConfig();
                 }
                 
@@ -249,30 +215,14 @@ class SiteConfigManager {
         }
         
         try {
-            let result;
+            // Usar supabaseClient directamente
+            const configData = {
+                key: key,
+                value: value.toString(),
+                description: description
+            };
             
-            // Usar SupabaseManager si está disponible
-            if (this.supabaseManager) {
-                const configData = {
-                    clave: key,
-                    valor: value.toString(),
-                    tipo: this.inferType(value),
-                    descripcion: description,
-                    categoria: category,
-                    publico: isPublic
-                };
-                
-                result = await this.supabaseManager.updateSiteConfig(configData);
-            } else {
-                // Fallback al método original
-                const configData = {
-                    key: key,
-                    value: value.toString(),
-                    description: description
-                };
-                
-                result = await this.supabaseClient.updateSiteConfig(configData);
-            }
+            const result = await this.supabaseClient.updateSiteConfig(configData);
             
             if (result.success || result) {
                 // Actualizar configuración local

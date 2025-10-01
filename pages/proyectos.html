@@ -131,7 +131,6 @@
                     Solicitar Cotización
                 </a>
             </div>
-        </section>
     </main>
 
     <!-- El footer se cargará dinámicamente desde ../components/footer.html -->
@@ -144,6 +143,7 @@
     <!-- Scripts de configuración y cliente de Supabase -->
     <script src="../supabase/config.js"></script>
     <script src="../js/supabase-client.js"></script>
+    <script src="../js/site-config.js"></script>
     <script src="../supabase/init.js"></script>
     
     <!-- Scripts de la aplicación -->
@@ -153,6 +153,7 @@
         // Inicializar el sistema de proyectos cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             initializeProjects();
+            initializeSiteConfig();
         });
     </script>
 
