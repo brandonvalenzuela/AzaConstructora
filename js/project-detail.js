@@ -17,75 +17,75 @@ class ProjectDetailManager {
 
     // Buscar proyecto por diferentes criterios
     findProject(params) {
-        console.log('Buscando proyecto con parámetros:', params);
-        console.log('Total de proyectos disponibles:', this.allProjects.length);
+        devLog.log('Buscando proyecto con parámetros:', params);
+        devLog.log('Total de proyectos disponibles:', this.allProjects.length);
         
         if (!this.allProjects.length) {
-            console.error('No hay proyectos cargados');
+            devLog.error('No hay proyectos cargados');
             return null;
         }
 
         // Mostrar IDs disponibles para depuración
-        console.log('IDs de proyectos disponibles:', this.allProjects.map(p => p.id));
+        devLog.log('IDs de proyectos disponibles:', this.allProjects.map(p => p.id));
 
         // Buscar por ID si está disponible
         if (params.id) {
-            console.log('Buscando por ID:', params.id);
+            devLog.log('Buscando por ID:', params.id);
             // Buscar por ID (slug) primero
             let project = this.allProjects.find(p => p.id === params.id);
             if (project) {
-                console.log('Proyecto encontrado por ID (slug):', project.title);
+                devLog.log('Proyecto encontrado por ID (slug):', project.title);
                 return project;
             }
             
             // Si no se encuentra, intentar buscar por UUID (para compatibilidad con Supabase)
             project = this.allProjects.find(p => p.uuid === params.id);
             if (project) {
-                console.log('Proyecto encontrado por UUID:', project.title);
+                devLog.log('Proyecto encontrado por UUID:', project.title);
                 return project;
             }
             
-            console.log('No se encontró proyecto con ID:', params.id);
+            devLog.log('No se encontró proyecto con ID:', params.id);
         }
 
         // Buscar por título y categoría
         if (params.title && params.category) {
-            console.log('Buscando por título y categoría:', params.title, params.category);
+            devLog.log('Buscando por título y categoría:', params.title, params.category);
             const project = this.allProjects.find(p => 
                 p.title.toLowerCase().replace(/\s+/g, '-') === params.title.toLowerCase() &&
                 p.category === params.category
             );
             if (project) {
-                console.log('Proyecto encontrado por título y categoría:', project.title);
+                devLog.log('Proyecto encontrado por título y categoría:', project.title);
                 return project;
             }
         }
 
         // Buscar solo por título
         if (params.title) {
-            console.log('Buscando por título:', params.title);
+            devLog.log('Buscando por título:', params.title);
             const project = this.allProjects.find(p => 
                 p.title.toLowerCase().replace(/\s+/g, '-') === params.title.toLowerCase()
             );
             if (project) {
-                console.log('Proyecto encontrado por título:', project.title);
+                devLog.log('Proyecto encontrado por título:', project.title);
                 return project;
             }
         }
 
-        console.log('No se encontró ningún proyecto');
+        devLog.log('No se encontró ningún proyecto');
         return null;
     }
 
     // Cargar datos del proyecto
     loadProjectData() {
         const params = this.getUrlParams();
-        console.log('Parámetros de URL obtenidos:', params);
-        console.log('URL actual:', window.location.href);
+        devLog.log('Parámetros de URL obtenidos:', params);
+        devLog.log('URL actual:', window.location.href);
         
         // Si no hay parámetros, mostrar error y redirigir
         if (!params.id && !params.title) {
-            console.log('No hay parámetros de proyecto, mostrando error');
+            devLog.log('No hay parámetros de proyecto, mostrando error');
             this.showError();
             // Redirigir a la página de proyectos después de 3 segundos
             setTimeout(() => {
@@ -95,16 +95,16 @@ class ProjectDetailManager {
         }
 
         // Buscar el proyecto
-        console.log('Iniciando búsqueda de proyecto...');
+        devLog.log('Iniciando búsqueda de proyecto...');
         this.currentProject = this.findProject(params);
         
         if (!this.currentProject) {
-            console.log('Proyecto no encontrado, mostrando error');
+            devLog.log('Proyecto no encontrado, mostrando error');
             this.showError();
             return;
         }
 
-        console.log('Proyecto encontrado, renderizando detalles:', this.currentProject.title);
+        devLog.log('Proyecto encontrado, renderizando detalles:', this.currentProject.title);
         this.renderProjectDetail();
     }
 
@@ -307,12 +307,12 @@ class ProjectDetailManager {
 
     // Inicializar con datos de proyectos
     initialize(projects) {
-        console.log('=== INITIALIZE PROJECT DETAIL MANAGER ===');
-        console.log('Proyectos recibidos:', projects);
-        console.log('Número de proyectos:', projects ? projects.length : 0);
+        devLog.log('=== INITIALIZE PROJECT DETAIL MANAGER ===');
+        devLog.log('Proyectos recibidos:', projects);
+        devLog.log('Número de proyectos:', projects ? projects.length : 0);
         
         this.allProjects = projects || [];
-        console.log('Proyectos asignados a allProjects:', this.allProjects.length);
+        devLog.log('Proyectos asignados a allProjects:', this.allProjects.length);
         
         this.loadProjectData();
     }
@@ -351,14 +351,14 @@ const projectDetailManager = new ProjectDetailManager();
 async function initializeProjectDetail() {
     // Verificar si tenemos acceso a los proyectos desde projects.js
     if (typeof projectManager !== 'undefined' && projectManager.projects && projectManager.projects.length > 0) {
-        console.log('Proyectos encontrados:', projectManager.projects.length);
+        devLog.log('Proyectos encontrados:', projectManager.projects.length);
         projectDetailManager.initialize(projectManager.projects);
         return;
     }
     
     if (typeof projectManager !== 'undefined') {
         // Si projectManager existe pero no tiene proyectos, inicializar proyectos primero
-        console.log('ProjectManager existe pero sin proyectos, inicializando...');
+        devLog.log('ProjectManager existe pero sin proyectos, inicializando...');
         
         if (typeof initializeProjects === 'function') {
             await initializeProjects();
@@ -372,17 +372,17 @@ async function initializeProjectDetail() {
             await new Promise(resolve => setTimeout(resolve, retryDelay));
             
             if (projectManager.projects && projectManager.projects.length > 0) {
-                console.log(`Proyectos cargados después de ${(i + 1) * retryDelay}ms:`, projectManager.projects.length);
+                devLog.log(`Proyectos cargados después de ${(i + 1) * retryDelay}ms:`, projectManager.projects.length);
                 projectDetailManager.initialize(projectManager.projects);
                 return;
             }
         }
         
         // Si después de todos los re intentos no hay proyectos
-        console.error('No se pudieron cargar los proyectos después de esperar');
+        devLog.error('No se pudieron cargar los proyectos después de esperar');
         projectDetailManager.showError();
     } else {
-        console.error('ProjectManager no está disponible');
+        devLog.error('ProjectManager no está disponible');
         projectDetailManager.showError();
     }
 }
