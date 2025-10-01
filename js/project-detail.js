@@ -31,13 +31,21 @@ class ProjectDetailManager {
         // Buscar por ID si está disponible
         if (params.id) {
             console.log('Buscando por ID:', params.id);
-            const project = this.allProjects.find(p => p.id === params.id);
+            // Buscar por ID (slug) primero
+            let project = this.allProjects.find(p => p.id === params.id);
             if (project) {
-                console.log('Proyecto encontrado por ID:', project.title);
+                console.log('Proyecto encontrado por ID (slug):', project.title);
                 return project;
-            } else {
-                console.log('No se encontró proyecto con ID:', params.id);
             }
+            
+            // Si no se encuentra, intentar buscar por UUID (para compatibilidad con Supabase)
+            project = this.allProjects.find(p => p.uuid === params.id);
+            if (project) {
+                console.log('Proyecto encontrado por UUID:', project.title);
+                return project;
+            }
+            
+            console.log('No se encontró proyecto con ID:', params.id);
         }
 
         // Buscar por título y categoría

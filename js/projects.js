@@ -53,6 +53,7 @@ class ProjectManager {
     convertSupabaseProject(supabaseProject) {
         const {
             id,
+            slug,
             titulo,
             descripcion,
             descripcion_corta,
@@ -76,6 +77,7 @@ class ProjectManager {
             'movimiento_tierras': 'obra-civil',
             'supervision': 'obra-civil',
             'remodelacion': 'edificacion',
+            'edificacion': 'edificacion',
             'industrial': 'industrial',
             'infraestructura': 'infraestructura'
         };
@@ -86,12 +88,14 @@ class ProjectManager {
             'movimiento_tierras': 'Movimiento de Tierras',
             'supervision': 'Supervisión',
             'remodelacion': 'Remodelación',
+            'edificacion': 'Edificación',
             'industrial': 'Industrial',
             'infraestructura': 'Infraestructura'
         };
         
         return {
-            id: id,
+            id: slug || id, // Usar slug como ID para compatibilidad con defaultProjects
+            uuid: id, // Guardar el UUID real de Supabase
             category: categoryMap[categoria] || 'obra-civil',
             imageUrl: imagen_principal || (imagenes && imagenes.length > 0 ? imagenes[0] : 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1170&auto=format&fit=crop'),
             imageAlt: `Proyecto ${titulo}`,
