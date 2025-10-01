@@ -21,12 +21,14 @@
 - 📋 **Proyectos** - Portfolio de trabajos realizados
 - 📞 **Contacto** - Formularios de contacto y información
 
-### 📧 **Sistema de Contacto**
-- ✅ **EmailJS integrado** - Envío de emails sin backend
-- ✅ **Formularios validados** - Validación en tiempo real
+### 📧 **Sistema de Contacto Avanzado**
+- ✅ **Supabase integrado** - Almacenamiento persistente de contactos
+- ✅ **EmailJS como respaldo** - Doble sistema de envío
+- ✅ **Validación robusta** - Validación en tiempo real y sanitización
 - ✅ **Múltiples formularios** - Contacto general y solicitud de llamada
-- ✅ **Respuesta automática** - Confirmación inmediata al usuario
+- ✅ **Manejo de errores** - Sistema robusto de recuperación
 - ✅ **Categorización** - Tipos de proyecto predefinidos
+- ✅ **Configuración dinámica** - Ajustes desde base de datos
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -34,8 +36,14 @@
 - **HTML5** - Estructura semántica y accesible
 - **CSS3** - Estilos modernos con Flexbox y Grid
 - **JavaScript ES6+** - Funcionalidad interactiva
-- **EmailJS** - Servicio de envío de emails
+- **Supabase** - Backend as a Service (BaaS) principal
+- **EmailJS** - Servicio de envío de emails (respaldo)
 - **Responsive Design** - Compatible con todos los dispositivos
+
+### **Backend as a Service**
+- **Supabase** - Base de datos PostgreSQL, autenticación y APIs
+- **Row Level Security (RLS)** - Seguridad a nivel de base de datos
+- **Real-time subscriptions** - Actualizaciones en tiempo real
 
 ### **Herramientas de Desarrollo**
 - **Node.js** - Entorno de desarrollo
@@ -63,20 +71,31 @@
    npm install
    ```
 
-3. **Configurar EmailJS:**
+3. **Configurar Supabase (Principal):**
+   - Crear cuenta en [Supabase](https://supabase.com/)
+   - Crear nuevo proyecto
+   - Ejecutar el schema SQL desde `supabase/schema.sql`
+   - Obtener URL del proyecto y clave anónima
+   - Ver guía completa en `supabase/README.md`
+
+4. **Configurar EmailJS (Respaldo):**
    - Crear cuenta en [EmailJS](https://www.emailjs.com/)
    - Configurar servicio de email
    - Crear template de email
    - Obtener claves de API
 
-4. **Configurar variables de entorno:**
+5. **Configurar variables de entorno:**
    ```bash
    cp .env.example .env
    ```
    
    Edita el archivo `.env`:
    ```env
-   # EmailJS Configuration
+   # Supabase Configuration (Principal)
+   SUPABASE_URL=https://tu-proyecto.supabase.co
+   SUPABASE_ANON_KEY=tu_anon_key_aqui
+   
+   # EmailJS Configuration (Respaldo)
    EMAILJS_SERVICE_ID=tu_service_id
    EMAILJS_TEMPLATE_ID=tu_template_id
    EMAILJS_PUBLIC_KEY=tu_public_key
@@ -189,12 +208,20 @@ El sitio se despliega automáticamente usando GitHub Actions:
 
 ## 🔧 Funcionalidades Principales
 
-### **📧 Sistema de Contacto**
+### **📧 Sistema de Contacto Híbrido**
 - **Formulario principal** en `/contacto.html`
 - **Formulario independiente** en `/contact-form.html`
-- **Validación en tiempo real** de todos los campos
-- **Envío vía EmailJS** sin necesidad de backend
-- **Confirmación visual** al usuario
+- **Validación robusta** con sanitización de datos
+- **Doble envío** - Supabase (principal) + EmailJS (respaldo)
+- **Manejo de errores** inteligente con recuperación automática
+- **Confirmación visual** mejorada al usuario
+
+### **🗄️ Gestión de Datos**
+- **Base de datos PostgreSQL** vía Supabase
+- **Almacenamiento de contactos** con metadatos completos
+- **Gestión de proyectos** dinámicos desde base de datos
+- **Configuración del sitio** editable en tiempo real
+- **Estadísticas y métricas** de uso del sitio
 
 ### **📱 Navegación Dinámica**
 - **Menú responsivo** que se adapta a móviles
@@ -225,22 +252,32 @@ El sitio se despliega automáticamente usando GitHub Actions:
 
 ## 🐛 Troubleshooting
 
-### **❌ Formularios no envían emails**
-1. **Verificar configuración EmailJS:**
+### **❌ Formularios no envían o no se guardan**
+1. **Verificar configuración Supabase:**
    ```bash
-   # Revisar que config.js se haya generado
+   # Revisar que config.js se haya generado con Supabase
    cat js/config.js
    ```
 2. **Verificar variables de entorno:**
-   - Service ID correcto
-   - Template ID correcto
-   - Public Key correcta
-3. **Revisar consola del navegador** para errores JavaScript
+   - SUPABASE_URL correcto
+   - SUPABASE_ANON_KEY correcto
+   - EmailJS configurado como respaldo
+3. **Revisar consola del navegador:**
+   - Errores de conexión a Supabase
+   - Errores de validación de formularios
+   - Problemas de CORS
+
+### **❌ Error de conexión a Supabase**
+- Verificar que el proyecto Supabase esté activo
+- Verificar que las tablas existan (ejecutar schema.sql)
+- Verificar políticas RLS en Supabase Dashboard
+- Comprobar que la URL y clave sean correctas
 
 ### **❌ Error 404 en config.js**
 - Verificar que GitHub Actions se ejecutó correctamente
 - Verificar que las variables están configuradas en GitHub Secrets
 - Verificar que GitHub Pages está habilitado
+- Comprobar que tanto EmailJS como Supabase estén configurados
 
 ### **❌ Estilos no se cargan**
 - Verificar rutas relativas en CSS

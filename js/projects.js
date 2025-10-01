@@ -1,8 +1,13 @@
-// Sistema de gestión de proyectos dinámico
+// Sistema de gestión de proyectos dinámico con Supabase
 class ProjectManager {
     constructor() {
         this.projects = [];
         this.currentFilter = 'all';
+        this.supabaseClient = window.supabaseClient;
+        this.supabaseEnabled = this.supabaseClient && this.supabaseClient.isConnected;
+        
+        console.log('🔧 ProjectManager inicializado:');
+        console.log('  - Supabase:', this.supabaseEnabled ? '✅ Conectado' : '❌ No disponible');
     }
 
     // Agregar un proyecto
@@ -13,6 +18,185 @@ class ProjectManager {
     // Agregar múltiples proyectos
     addProjects(projectsArray) {
         this.projects.push(...projectsArray);
+    }
+    
+    // Cargar proyectos desde Supabase
+    async loadProjectsFromSupabase(filters = {}) {
+        if (!this.supabaseEnabled) {
+            console.warn('⚠️ Supabase no disponible, usando proyectos por defecto');
+            return { success: false, error: 'Supabase no conectado' };
+        }
+        
+        try {
+            const result = await this.supabaseClient.getProjects(filters);
+            
+            if (result.success && result.data) {
+                // Convertir datos de Supabase al formato esperado
+                const supabaseProjects = result.data.map(project => this.convertSupabaseProject(project));
+                
+                // Reemplazar proyectos actuales con los de Supabase
+                this.projects = supabaseProjects;
+                
+                console.log(`✅ ${supabaseProjects.length} proyectos cargados desde Supabase`);
+                return { success: true, data: supabaseProjects };
+            } else {
+                console.warn('⚠️ No se pudieron cargar proyectos desde Supabase:', result.error);
+                return { success: false, error: result.error };
+            }
+        } catch (error) {
+            console.error('❌ Error cargando proyectos desde Supabase:', error);
+            return { success: false, error: error.message };
+        }
+    }
+    
+    // Convertir proyecto de Supabase al formato del frontend
+    convertSupabaseProject(supabaseProject) {
+        const {
+            id,
+            titulo,
+            descripcion,
+            descripcion_corta,
+            categoria,
+            subcategoria,
+            estado,
+            imagenes,
+            imagen_principal,
+            ubicacion,
+            cliente,
+            fecha_inicio,
+            fecha_fin,
+            area_construccion,
+            destacado
+        } = supabaseProject;
+        
+        // Mapear categorías de Supabase a las del frontend
+        const categoryMap = {
+            'construccion': 'obra-civil',
+            'demolicion': 'obra-civil',
+            'movimiento_tierras': 'obra-civil',
+            'supervision': 'obra-civil',
+            'remodelacion': 'edificacion',
+            'industrial': 'industrial',
+            'infraestructura': 'infraestructura'
+        };
+        
+        const categoryLabelMap = {
+            'construccion': 'Construcción',
+            'demolicion': 'Demolición',
+            'movimiento_tierras': 'Movimiento de Tierras',
+            'supervision': 'Supervisión',
+            'remodelacion': 'Remodelación',
+            'industrial': 'Industrial',
+            'infraestructura': 'Infraestructura'
+        };
+        
+        return {
+            id: id,
+            category: categoryMap[categoria] || 'obra-civil',
+            imageUrl: imagen_principal || (imagenes && imagenes.length > 0 ? imagenes[0] : 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1170&auto=format&fit=crop'),
+            imageAlt: `Proyecto ${titulo}`,
+            categoryLabel: categoryLabelMap[categoria] || 'Construcción',
+            title: titulo,
+            description: descripcion_corta || descripcion?.substring(0, 150) + '...' || 'Proyecto de construcción profesional.',
+            detailedDescription: descripcion || descripcion_corta || 'Descripción detallada no disponible.',
+            location: ubicacion || 'Sonora, México',
+            year: fecha_inicio ? new Date(fecha_inicio).getFullYear().toString() : new Date().getFullYear().toString(),
+            status: this.mapSupabaseStatus(estado),
+            area: area_construccion ? `${area_construccion} m²` : 'No especificada',
+            duration: this.calculateDuration(fecha_inicio, fecha_fin),
+            client: cliente || 'Cliente confidencial',
+            featured: destacado || false,
+            // Campos adicionales para compatibilidad completa
+            features: supabaseProject.caracteristicas || [],
+            specifications: supabaseProject.especificaciones || {},
+            gallery: imagenes && Array.isArray(imagenes) ? imagenes.map((url, index) => ({
+                url: url,
+                alt: `${titulo} - Imagen ${index + 1}`,
+                caption: `Vista del proyecto ${titulo}`
+            })) : []
+        };
+    }
+    
+    // Mapear estados de Supabase a estados del frontend
+    mapSupabaseStatus(estado) {
+        const statusMap = {
+            'activo': 'En Progreso',
+            'completado': 'Completado',
+            'pausado': 'Pausado',
+            'cancelado': 'Cancelado',
+            'borrador': 'Planificación'
+        };
+        
+        return statusMap[estado] || 'En Progreso';
+    }
+    
+    // Calcular duración del proyecto
+    calculateDuration(fechaInicio, fechaFin) {
+        if (!fechaInicio) return 'No especificada';
+        
+        const inicio = new Date(fechaInicio);
+        const fin = fechaFin ? new Date(fechaFin) : new Date();
+        
+        const diffTime = Math.abs(fin - inicio);
+        const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30));
+        
+        return `${diffMonths} ${diffMonths === 1 ? 'mes' : 'meses'}`;
+    }
+    
+    // Guardar proyecto en Supabase
+    async saveProjectToSupabase(projectData) {
+        if (!this.supabaseEnabled) {
+            return { success: false, error: 'Supabase no conectado' };
+        }
+        
+        try {
+            const supabaseData = {
+                title: projectData.title,
+                description: projectData.detailedDescription || projectData.description,
+                category: this.mapFrontendCategoryToSupabase(projectData.category),
+                images: projectData.gallery?.map(img => img.url) || [],
+                status: this.mapFrontendStatusToSupabase(projectData.status),
+                startDate: projectData.startDate || new Date().toISOString()
+            };
+            
+            const result = await this.supabaseClient.insertProject(supabaseData);
+            
+            if (result.success) {
+                console.log('✅ Proyecto guardado en Supabase:', result.data.id);
+                // Agregar a la lista local
+                this.addProject(projectData);
+            }
+            
+            return result;
+        } catch (error) {
+            console.error('❌ Error guardando proyecto:', error);
+            return { success: false, error: error.message };
+        }
+    }
+    
+    // Mapear categoría del frontend a Supabase
+    mapFrontendCategoryToSupabase(category) {
+        const categoryMap = {
+            'obra-civil': 'construccion',
+            'edificacion': 'remodelacion',
+            'industrial': 'industrial',
+            'infraestructura': 'infraestructura'
+        };
+        
+        return categoryMap[category] || 'construccion';
+    }
+    
+    // Mapear estado del frontend a Supabase
+    mapFrontendStatusToSupabase(status) {
+        const statusMap = {
+            'En Progreso': 'activo',
+            'Completado': 'completado',
+            'Pausado': 'pausado',
+            'Cancelado': 'cancelado',
+            'Planificación': 'borrador'
+        };
+        
+        return statusMap[status] || 'activo';
     }
 
     // Crear HTML para una tarjeta de proyecto
@@ -421,9 +605,34 @@ const defaultProjects = [
 const projectManager = new ProjectManager();
 
 // Función de inicialización
-function initializeProjects() {
-    // Cargar proyectos predefinidos
-    projectManager.addProjects(defaultProjects);
+async function initializeProjects() {
+    console.log('🚀 Inicializando sistema de proyectos...');
+    
+    // Intentar cargar proyectos desde Supabase primero
+    let supabaseLoaded = false;
+    if (projectManager.supabaseEnabled) {
+        try {
+            const result = await projectManager.loadProjectsFromSupabase({ 
+                visible_web: true,
+                limit: 20 
+            });
+            
+            if (result.success && result.data.length > 0) {
+                supabaseLoaded = true;
+                console.log(`✅ ${result.data.length} proyectos cargados desde Supabase`);
+            } else {
+                console.warn('⚠️ No se encontraron proyectos en Supabase o hubo un error');
+            }
+        } catch (error) {
+            console.warn('⚠️ Error cargando desde Supabase:', error.message);
+        }
+    }
+    
+    // Si no se pudieron cargar desde Supabase, usar proyectos por defecto
+    if (!supabaseLoaded) {
+        console.log('📦 Usando proyectos por defecto como respaldo');
+        projectManager.addProjects(defaultProjects);
+    }
     
     // Renderizar proyectos si existe el contenedor
     if (document.getElementById('projects-container')) {
@@ -434,6 +643,9 @@ function initializeProjects() {
     if (document.getElementById('category-filters')) {
         projectManager.setupCategoryFilters('category-filters', 'projects-container');
     }
+    
+    console.log(`🎯 Sistema de proyectos listo con ${projectManager.projects.length} proyectos`);
+    console.log('  - Fuente:', supabaseLoaded ? 'Supabase' : 'Datos por defecto');
 }
 
 // Exportar para uso global

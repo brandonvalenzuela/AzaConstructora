@@ -1,6 +1,7 @@
 /**
- * Contact Handler - EmailJS Integration
+ * Contact Handler - Supabase + EmailJS Integration
  * Maneja todos los formularios de contacto del sitio web
+ * Usa Supabase como backend principal y EmailJS como respaldo
  */
 class ContactHandler {
     constructor() {
@@ -8,19 +9,30 @@ class ContactHandler {
         this.initializedForms = new Set();
         
         // Configuracion de EmailJS desde config.js
-        const env = window.APP_CONFIG?.emailjs;
-        if (!env) {
-            console.warn('⚠️ Configuración de EmailJS no encontrada. Asegúrate de incluir config.js');
-            // Continuar sin EmailJS para evitar errores
-            this.serviceId = null;
-            this.templateId = null;
-            this.publicKey = null;
-            return;
+        const emailjsConfig = window.APP_CONFIG?.emailjs;
+        if (emailjsConfig) {
+            this.serviceId = emailjsConfig.serviceId || emailjsConfig.EMAILJS_SERVICE_ID;
+            this.templateId = emailjsConfig.templateId || emailjsConfig.EMAILJS_TEMPLATE_ID;
+            this.publicKey = emailjsConfig.publicKey || emailjsConfig.EMAILJS_PUBLIC_KEY;
+            this.emailjsEnabled = !!(this.serviceId && this.templateId && this.publicKey);
+        } else {
+            console.warn('⚠️ Configuración de EmailJS no encontrada.');
+            this.emailjsEnabled = false;
         }
         
-        this.serviceId = env.serviceId || env.EMAILJS_SERVICE_ID;
-        this.templateId = env.templateId || env.EMAILJS_TEMPLATE_ID;
-        this.publicKey = env.publicKey || env.EMAILJS_PUBLIC_KEY;
+        // Configuración de Supabase
+        this.supabaseClient = window.supabaseClient;
+        this.supabaseEnabled = this.supabaseClient && this.supabaseClient.isConnected;
+        
+        // Sistema de validación
+        this.validationHandler = window.validationHandler;
+        this.validationEnabled = !!this.validationHandler;
+        
+        console.log('🔧 ContactHandler inicializado:');
+        console.log('  - Supabase:', this.supabaseEnabled ? '✅ Conectado' : '❌ No disponible');
+        console.log('  - EmailJS:', this.emailjsEnabled ? '✅ Configurado' : '❌ No configurado');
+        console.log('  - Validación:', this.validationEnabled ? '✅ Habilitada' : '❌ No disponible');
+        
         this.init(); 
     }
 
@@ -32,13 +44,12 @@ class ContactHandler {
     }
 
     init() {
-        // Inicializar EmailJS
-        if (typeof emailjs !== 'undefined') {
+        // Inicializar EmailJS si está disponible
+        if (this.emailjsEnabled && typeof emailjs !== 'undefined') {
             emailjs.init(this.publicKey);
-            console.log('EmailJS inicializado correctamente');
-        } else {
-            console.error('EmailJS no esta disponible. Asegurate de incluir la libreria EmailJS');
-            return;
+            console.log('✅ EmailJS inicializado correctamente');
+        } else if (this.emailjsEnabled) {
+            console.warn('⚠️ EmailJS configurado pero librería no disponible');
         }
 
         // Configurar event listeners cuando el DOM este listo
@@ -54,6 +65,7 @@ class ContactHandler {
         const reusableForm = document.getElementById('contact-form');
         if (reusableForm && !this.initializedForms.has('contact-form')) {
             reusableForm.addEventListener('submit', (e) => this.handleReusableContactFormSubmit(e));
+            this.setupFormValidation(reusableForm);
             this.initializedForms.add('contact-form');
         }
 
@@ -61,6 +73,7 @@ class ContactHandler {
         const homeForm = document.getElementById('contact-form-home');
         if (homeForm && !this.initializedForms.has('contact-form-home')) {
             homeForm.addEventListener('submit', (e) => this.handleHomeContactFormSubmit(e));
+            this.setupFormValidation(homeForm);
             this.initializedForms.add('contact-form-home');
         }
 
@@ -68,6 +81,7 @@ class ContactHandler {
         const contactForm = document.getElementById('contact-form-page');
         if (contactForm && !this.initializedForms.has('contact-form-page')) {
             contactForm.addEventListener('submit', (e) => this.handleContactFormSubmit(e));
+            this.setupFormValidation(contactForm);
             this.initializedForms.add('contact-form-page');
         }
 
@@ -75,6 +89,21 @@ class ContactHandler {
         const callButton = document.getElementById('call-request-btn');
         if (callButton) {
             callButton.addEventListener('click', (e) => this.handleCallRequest(e));
+        }
+    }
+    
+    // Configurar validación para un formulario
+    setupFormValidation(formElement) {
+        if (!this.validationEnabled) {
+            console.warn('⚠️ Sistema de validación no disponible');
+            return;
+        }
+        
+        try {
+            this.validationHandler.setupRealTimeValidation(formElement);
+            console.log(`✅ Validación en tiempo real configurada para formulario: ${formElement.id}`);
+        } catch (error) {
+            console.error('❌ Error configurando validación:', error);
         }
     }
 
@@ -99,19 +128,40 @@ class ContactHandler {
         timeField.value = new Date().toISOString();
     }
 
-    handleReusableContactFormSubmit(e) {
+    async handleReusableContactFormSubmit(e) {
         e.preventDefault();
         
         const form = e.target;
         const submitButton = form.querySelector('button[type="submit"]');
         const originalText = submitButton.textContent;
         
+        // Validar formulario si el sistema está disponible
+        if (this.validationEnabled) {
+            const validation = this.validationHandler.validateForm(form);
+            
+            if (!validation.valid) {
+                this.validationHandler.displayFormErrors(form, validation);
+                console.warn('❌ Formulario inválido:', validation.errors);
+                
+                // Mostrar notificación de error
+                this.showNotification(
+                    'Formulario Incompleto',
+                    'Por favor, corrige los errores marcados en el formulario.',
+                    'error'
+                );
+                return;
+            }
+            
+            // Limpiar errores previos
+            this.validationHandler.clearFormErrors(form);
+        }
+        
         // Agregar timestamp
         this.addTimestamp(form);
         
-        // Preparar datos del formulario
+        // Preparar y sanitizar datos del formulario
         const formData = new FormData(form);
-        const templateParams = {
+        let contactData = {
             name: formData.get('name'),
             email: formData.get('email'),
             phone: formData.get('phone'),
@@ -120,129 +170,174 @@ class ContactHandler {
             time: formData.get('time')
         };
         
-        this.setButtonLoading(submitButton, 'Enviando...');
-        
-        emailjs.send(this.serviceId, this.templateId, templateParams)
-            .then((response) => {
-                console.log('Email enviado exitosamente:', response.status, response.text);
-                this.showNotification('Mensaje Enviado!', 'Gracias por contactarnos. Te responderemos pronto.', 'success');
-                form.reset();
-            })
-            .catch((error) => {
-                console.error('Error al enviar email:', error);
-                this.showNotification('Error', 'Hubo un problema al enviar tu mensaje. Por favor, intenta nuevamente.', 'error');
-            })
-            .finally(() => {
-                this.resetButton(submitButton, originalText);
-            });
-    }
-
-    handleHomeContactFormSubmit(e) {
-        e.preventDefault();
-        
-        const form = e.target;
-        const submitButton = form.querySelector('button[type="submit"]');
-        const originalText = submitButton.textContent;
-        
-        // Agregar timestamp
-        this.addTimestamp(form);
-        
-        // Preparar datos del formulario
-        const formData = new FormData(form);
-        const templateParams = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            phone: formData.get('phone'),
-            project: formData.get('project'),
-            message: formData.get('message'),
-            time: formData.get('time')
-        };
+        // Sanitizar datos si el sistema está disponible
+        if (this.validationEnabled) {
+            try {
+                contactData = this.validationHandler.sanitizeFormData(formData);
+                contactData.time = formData.get('time'); // Mantener timestamp original
+            } catch (error) {
+                console.warn('⚠️ Error sanitizando datos:', error);
+            }
+        }
         
         this.setButtonLoading(submitButton, 'Enviando...');
         
-        emailjs.send(this.serviceId, this.templateId, templateParams)
-            .then((response) => {
-                console.log('Email enviado exitosamente:', response.status, response.text);
-                this.showNotification('Mensaje Enviado!', 'Gracias por contactarnos. Te responderemos pronto.', 'success');
+        try {
+            // Intentar guardar en Supabase primero
+            let supabaseSuccess = false;
+            if (this.supabaseEnabled) {
+                const result = await this.supabaseClient.insertContact(contactData);
+                if (result.success) {
+                    console.log('✅ Contacto guardado en Supabase:', result.data.id);
+                    supabaseSuccess = true;
+                } else {
+                    console.warn('⚠️ Error guardando en Supabase:', result.error);
+                }
+            }
+            
+            // Enviar por EmailJS (siempre, como notificación)
+            let emailSuccess = false;
+            if (this.emailjsEnabled && typeof emailjs !== 'undefined') {
+                try {
+                    const templateParams = {
+                        name: contactData.name,
+                        email: contactData.email,
+                        phone: contactData.phone,
+                        project: contactData.project,
+                        message: contactData.message,
+                        time: contactData.time,
+                        source: supabaseSuccess ? 'web-supabase' : 'web-emailjs-only'
+                    };
+                    
+                    const response = await emailjs.send(this.serviceId, this.templateId, templateParams);
+                    console.log('✅ Email enviado exitosamente:', response.status);
+                    emailSuccess = true;
+                } catch (emailError) {
+                    console.warn('⚠️ Error enviando email:', emailError);
+                }
+            }
+            
+            // Mostrar resultado al usuario
+            if (supabaseSuccess || emailSuccess) {
+                const message = supabaseSuccess 
+                    ? 'Gracias por contactarnos. Tu mensaje ha sido guardado y te responderemos pronto.'
+                    : 'Gracias por contactarnos. Te responderemos pronto.';
+                this.showNotification('¡Mensaje Enviado!', message, 'success');
                 form.reset();
-            })
-            .catch((error) => {
-                console.error('Error al enviar email:', error);
-                this.showNotification('Error', 'Hubo un problema al enviar tu mensaje. Por favor, intenta nuevamente.', 'error');
-            })
-            .finally(() => {
-                this.resetButton(submitButton, originalText);
-            });
+            } else {
+                throw new Error('No se pudo procesar el formulario');
+            }
+            
+        } catch (error) {
+            // Usar sistema robusto de manejo de errores
+            let errorInfo;
+            if (this.validationEnabled) {
+                errorInfo = this.validationHandler.handleApiError(error, 'envío de formulario');
+                this.validationHandler.logError(error, 'contact-form-submit', {
+                    formId: form.id,
+                    contactData: { ...contactData, message: '[REDACTED]' } // No loggear mensaje completo
+                });
+            } else {
+                errorInfo = {
+                    userMessage: 'Hubo un problema al enviar tu mensaje. Por favor, intenta nuevamente o contáctanos directamente.'
+                };
+            }
+            
+            console.error('❌ Error procesando formulario:', error);
+            this.showNotification(
+                'Error de Envío', 
+                errorInfo.userMessage, 
+                'error'
+            );
+        } finally {
+            this.resetButton(submitButton, originalText);
+        }
     }
 
-    handleContactFormSubmit(e) {
-        e.preventDefault();
-        
-        const form = e.target;
-        const submitButton = form.querySelector('button[type="submit"]');
-        const originalText = submitButton.textContent;
-        
-        // Agregar timestamp
-        this.addTimestamp(form);
-        
-        // Preparar datos del formulario
-        const formData = new FormData(form);
-        const templateParams = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            phone: formData.get('phone'),
-            project: formData.get('project'),
-            message: formData.get('message'),
-            time: formData.get('time')
-        };
-        
-        this.setButtonLoading(submitButton, 'Enviando...');
-        
-        emailjs.send(this.serviceId, this.templateId, templateParams)
-            .then((response) => {
-                console.log('Email enviado exitosamente:', response.status, response.text);
-                this.showNotification('Mensaje Enviado!', 'Gracias por contactarnos. Te responderemos pronto.', 'success');
-                form.reset();
-            })
-            .catch((error) => {
-                console.error('Error al enviar email:', error);
-                this.showNotification('Error', 'Hubo un problema al enviar tu mensaje. Por favor, intenta nuevamente.', 'error');
-            })
-            .finally(() => {
-                this.resetButton(submitButton, originalText);
-            });
+    async handleHomeContactFormSubmit(e) {
+        // Reutilizar la lógica del formulario principal
+        return this.handleReusableContactFormSubmit(e);
     }
 
-    handleCallRequest(e) {
+    async handleContactFormSubmit(e) {
+        // Reutilizar la lógica del formulario principal
+        return this.handleReusableContactFormSubmit(e);
+    }
+
+    async handleCallRequest(e) {
         e.preventDefault();
         
         const button = e.target;
         const originalText = button.textContent;
         
-        // Crear formulario temporal con datos de solicitud de llamada
-        const templateParams = {
+        // Crear datos de solicitud de llamada
+        const contactData = {
             name: 'Solicitud de Llamada',
-            email: 'cliente@ejemplo.com',
+            email: 'solicitud@web.com',
             phone: 'Por definir',
             project: 'Solicitud de Llamada',
-            message: 'El cliente ha solicitado que lo contactemos por telefono.',
+            message: 'El cliente ha solicitado que lo contactemos por teléfono desde el sitio web.',
             time: new Date().toISOString()
         };
         
         this.setButtonLoading(button, 'Enviando...');
         
-        emailjs.send(this.serviceId, this.templateId, templateParams)
-            .then((response) => {
-                console.log('Solicitud de llamada enviada:', response.status, response.text);
-                this.showNotification('Solicitud Enviada!', 'Nos pondremos en contacto contigo pronto.', 'success');
-            })
-            .catch((error) => {
-                console.error('Error al enviar solicitud:', error);
-                this.showNotification('Error', 'Hubo un problema al enviar tu solicitud. Por favor, intenta nuevamente.', 'error');
-            })
-            .finally(() => {
-                this.resetButton(button, originalText);
-            });
+        try {
+            // Intentar guardar en Supabase primero
+            let supabaseSuccess = false;
+            if (this.supabaseEnabled) {
+                const result = await this.supabaseClient.insertContact(contactData);
+                if (result.success) {
+                    console.log('✅ Solicitud de llamada guardada en Supabase:', result.data.id);
+                    supabaseSuccess = true;
+                } else {
+                    console.warn('⚠️ Error guardando solicitud en Supabase:', result.error);
+                }
+            }
+            
+            // Enviar por EmailJS como notificación
+            let emailSuccess = false;
+            if (this.emailjsEnabled && typeof emailjs !== 'undefined') {
+                try {
+                    const templateParams = {
+                        name: contactData.name,
+                        email: contactData.email,
+                        phone: contactData.phone,
+                        project: contactData.project,
+                        message: contactData.message,
+                        time: contactData.time,
+                        source: supabaseSuccess ? 'call-request-supabase' : 'call-request-emailjs-only'
+                    };
+                    
+                    const response = await emailjs.send(this.serviceId, this.templateId, templateParams);
+                    console.log('✅ Solicitud de llamada enviada por email:', response.status);
+                    emailSuccess = true;
+                } catch (emailError) {
+                    console.warn('⚠️ Error enviando solicitud por email:', emailError);
+                }
+            }
+            
+            // Mostrar resultado al usuario
+            if (supabaseSuccess || emailSuccess) {
+                this.showNotification(
+                    '¡Solicitud Enviada!', 
+                    'Hemos recibido tu solicitud. Nos pondremos en contacto contigo pronto.', 
+                    'success'
+                );
+            } else {
+                throw new Error('No se pudo procesar la solicitud');
+            }
+            
+        } catch (error) {
+            console.error('❌ Error procesando solicitud de llamada:', error);
+            this.showNotification(
+                'Error', 
+                'Hubo un problema al enviar tu solicitud. Por favor, intenta nuevamente o contáctanos directamente.', 
+                'error'
+            );
+        } finally {
+            this.resetButton(button, originalText);
+        }
     }
 
     setButtonLoading(button, loadingText) {

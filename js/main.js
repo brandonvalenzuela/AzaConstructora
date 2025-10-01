@@ -143,7 +143,16 @@ function initHeroCarousel() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // Inicializar configuración del sitio
+    if (typeof initializeSiteConfig === 'function') {
+        try {
+            await initializeSiteConfig();
+        } catch (error) {
+            console.warn('⚠️ Error inicializando configuración del sitio:', error);
+        }
+    }
+    
     // Inicializar carrusel del hero
     initHeroCarousel();
 

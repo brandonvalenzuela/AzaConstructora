@@ -1,0 +1,41 @@
+# 🔒 Archivos de configuración con credenciales
+config-local.js
+config-production.js
+config-development.js
+
+# 🔑 Variables de entorno
+.env
+.env.local
+.env.development
+.env.production
+
+# 📊 Logs y archivos temporales
+*.log
+*.tmp
+*.temp
+
+# 🧪 Archivos de prueba personalizados
+test-local.html
+test-personal.html
+
+# 💾 Backups de base de datos
+*.sql.backup
+*.dump
+
+# 📁 Carpetas temporales
+temp/
+tmp/
+backups/
+
+# 🔧 Archivos de configuración del IDE
+.vscode/settings.json
+.idea/
+
+# 📝 Notas personales
+notas-personales.md
+todo-personal.md
+credenciales.txt
+
+# ⚠️ IMPORTANTE: 
+# Este .gitignore protege archivos sensibles.
+# Siempre verifica antes de hacer commit que no incluyes credenciales.

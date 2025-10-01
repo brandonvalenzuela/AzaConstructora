@@ -42,25 +42,24 @@ jobs:
         echo "EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID }}" >> .env
         echo "EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID }}" >> .env
         echo "EMAILJS_PUBLIC_KEY=${{ secrets.EMAILJS_PUBLIC_KEY }}" >> .env
+        echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> .env
+        echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
         
-    - name: ⚙️ Generar configuración de EmailJS
+    - name: ⚙️ Generar configuración (EmailJS + Supabase)
       run: npm run config
       
     - name: 🔍 Verificar archivos generados
       run: |
         echo "📁 Contenido de js/:"
         ls -la js/
-        echo "\n📄 Contenido de config.js:"
-        cat js/config.js
+        echo "📄 Contenido de config.js:"
+        cat js/config.js | head -20  # Mostrar solo las primeras 20 líneas por seguridad
         echo "\n✅ Archivos críticos:"
         ls -la *.html css/ assets/ || true
         
     - name: 🧪 Ejecutar tests
       run: npm test --if-present
       continue-on-error: true # No fallar si no hay tests
-      
-    - name: 🏗️ Build del proyecto
-      run: npm run build
       
     - name: 🔗 Crear enlaces para GitHub Pages
       run: |
@@ -109,6 +108,9 @@ jobs:
         echo "📁 Recursos y componentes:"
         test -f js/config.js && echo "✅ js/config.js" || echo "❌ js/config.js"
         test -f js/contact-handler.js && echo "✅ js/contact-handler.js" || echo "❌ js/contact-handler.js"
+        test -f js/supabase-client.js && echo "✅ js/supabase-client.js" || echo "❌ js/supabase-client.js"
+        test -f js/site-config.js && echo "✅ js/site-config.js" || echo "❌ js/site-config.js"
+        test -f js/validation-handler.js && echo "✅ js/validation-handler.js" || echo "❌ js/validation-handler.js"
         test -f css/styles.css && echo "✅ css/styles.css" || echo "❌ css/styles.css"
         test -f components/header.html && echo "✅ components/header.html" || echo "❌ components/header.html"
         test -f components/footer.html && echo "✅ components/footer.html" || echo "❌ components/footer.html"
@@ -179,7 +181,7 @@ jobs:
         echo "✅ Deploy completado exitosamente"
         echo "🌐 Sitio web listo para producción"
         echo "📧 EmailJS configurado correctamente"
-        echo "🔧 Variables de entorno aplicadas"
+        echo "🔧 Variables de entorno aplicadas (EmailJS + Supabase)"
         echo "🔗 Páginas copiadas a la raíz para GitHub Pages"
         echo "📁 Estructura de archivos validada correctamente"
         
@@ -189,7 +191,7 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "✅ **Estado**: Exitoso" >> $GITHUB_STEP_SUMMARY
         echo "📅 **Fecha**: $(date)" >> $GITHUB_STEP_SUMMARY
-        echo "🔧 **Configuración**: EmailJS aplicada" >> $GITHUB_STEP_SUMMARY
+        echo "🔧 **Configuración**: EmailJS + Supabase aplicada" >> $GITHUB_STEP_SUMMARY
         echo "📁 **Archivos**: Todos los archivos críticos validados" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### 🎯 Próximos pasos:" >> $GITHUB_STEP_SUMMARY
@@ -213,6 +215,10 @@ jobs:
 # - EMAILJS_SERVICE_ID: ID del servicio EmailJS
 # - EMAILJS_TEMPLATE_ID: ID del template EmailJS
 # - EMAILJS_PUBLIC_KEY: Clave pública EmailJS
+#
+# 🗄️ Supabase (requerido):
+# - SUPABASE_URL: URL del proyecto Supabase
+# - SUPABASE_ANON_KEY: Clave anónima de Supabase
 #
 # 🚀 Deploy (según proveedor):
 # - VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID
