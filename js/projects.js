@@ -3,22 +3,10 @@ class ProjectManager {
     constructor() {
         this.projects = [];
         this.currentFilter = 'all';
+        this.supabaseClient = window.supabaseClient;
+        this.supabaseEnabled = this.supabaseClient && this.supabaseClient.isConnected;
         
-        // Detectar si estamos en GitHub Pages
-        this.isGitHubPages = window.location.hostname.includes('github.io');
-        
-        // En GitHub Pages, no intentamos usar Supabase
-        if (this.isGitHubPages) {
-            this.supabaseClient = null;
-            this.supabaseEnabled = false;
-            console.log('🔧 ProjectManager inicializado en GitHub Pages (modo offline):');
-        } else {
-            // Comportamiento normal para entorno de desarrollo
-            this.supabaseClient = window.supabaseClient;
-            this.supabaseEnabled = this.supabaseClient && this.supabaseClient.isConnected;
-            console.log('🔧 ProjectManager inicializado:');
-        }
-        
+        console.log('🔧 ProjectManager inicializado:');
         console.log('  - Supabase:', this.supabaseEnabled ? '✅ Conectado' : '❌ No disponible');
     }
 

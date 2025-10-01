@@ -5,16 +5,6 @@
 
 class SupabaseClient {
     constructor() {
-        // Detectar si estamos en GitHub Pages
-        this.isGitHubPages = window.location.hostname.includes('github.io');
-        
-        if (this.isGitHubPages) {
-            console.warn('⚠️ Ejecutando en GitHub Pages. Supabase deshabilitado automáticamente.');
-            this.client = null;
-            this.isConnected = false;
-            return;
-        }
-        
         // Configuración desde variables de entorno o config.js
         const config = window.APP_CONFIG?.supabase || {};
         
