@@ -115,25 +115,42 @@ class SupabaseInitializer {
     async checkDependencies() {
         this.log('🔍 Verificando dependencias...');
         
-        const dependencies = {
-            'Supabase Client': () => typeof window.supabase !== 'undefined',
+        const requiredDependencies = {
+            'Supabase Client': () => typeof window.supabase !== 'undefined'
+        };
+        
+        const optionalDependencies = {
             'Supabase Manager': () => typeof window.SupabaseManager !== 'undefined',
-            'Site Config Manager': () => typeof window.SiteConfigManager !== 'undefined'
+            'Site Config Manager': () => typeof window.SiteConfigManager !== 'undefined',
+            'Supabase Client Instance': () => typeof window.supabaseClient !== 'undefined'
         };
         
         const missing = [];
         
-        for (const [name, check] of Object.entries(dependencies)) {
+        // Verificar dependencias requeridas
+        for (const [name, check] of Object.entries(requiredDependencies)) {
             if (!check()) {
                 missing.push(name);
             }
         }
         
         if (missing.length > 0) {
-            throw new Error(`Dependencias faltantes: ${missing.join(', ')}`);
+            throw new Error(`Dependencias críticas faltantes: ${missing.join(', ')}`);
         }
         
-        this.log('✅ Todas las dependencias están disponibles');
+        // Verificar dependencias opcionales (solo advertencia)
+        const missingOptional = [];
+        for (const [name, check] of Object.entries(optionalDependencies)) {
+            if (!check()) {
+                missingOptional.push(name);
+            }
+        }
+        
+        if (missingOptional.length > 0) {
+            this.log(`⚠️ Dependencias opcionales no disponibles: ${missingOptional.join(', ')}`);
+        }
+        
+        this.log('✅ Dependencias críticas verificadas');
     }
     
     /**
