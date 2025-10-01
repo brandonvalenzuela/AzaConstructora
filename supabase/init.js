@@ -92,7 +92,14 @@ class SupabaseInitializer {
         } catch (error) {
             this.error('❌ Error inicializando sistema Supabase:', error);
             this.errors.push(error);
-            throw error;
+            
+            // No lanzar error si ya hay componentes funcionando
+            if (window.supabaseClient?.isConnected || window.projectManager?.projects?.length > 0) {
+                this.log('⚠️ Inicialización parcial - algunos componentes están funcionando');
+                this.initStatus.complete = false;
+            } else {
+                throw error;
+            }
         }
     }
     
@@ -160,14 +167,24 @@ class SupabaseInitializer {
         this.log('🔌 Inicializando cliente Supabase...');
         
         try {
-            // Verificar credenciales
-            const credentials = window.SupabaseUtils?.checkCredentials();
-            
-            if (!credentials?.ready) {
-                throw new Error('Credenciales de Supabase no configuradas');
+            // Verificar si ya existe supabaseClient inicializado
+            if (window.supabaseClient && window.supabaseClient.isConnected) {
+                this.log('✅ SupabaseClient ya está inicializado y conectado');
+                this.components.set('supabaseClient', window.supabaseClient);
+                this.initStatus.supabase = true;
+                return;
             }
             
-            // Inicializar SupabaseManager
+            // Verificar credenciales alternativas
+            const hasConfig = window.APP_CONFIG?.supabase?.url && window.APP_CONFIG?.supabase?.key;
+            
+            if (!hasConfig && !window.supabaseClient) {
+                this.log('⚠️ Credenciales de Supabase no configuradas, modo offline');
+                this.initStatus.supabase = false;
+                return;
+            }
+            
+            // Inicializar SupabaseManager si está disponible
             if (window.initializeSupabase) {
                 this.components.set('supabaseManager', await window.initializeSupabase({
                     development: this.config.development
@@ -186,7 +203,8 @@ class SupabaseInitializer {
             
         } catch (error) {
             this.error('Error inicializando Supabase:', error);
-            throw error;
+            // No lanzar error, solo registrar
+            this.initStatus.supabase = false;
         }
     }
     
